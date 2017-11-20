@@ -20,7 +20,7 @@ DEBUG2 = -g -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer
 CPPFLAGS = -iquote includes/minilibx -iquote includes -iquote $(LIB_PATH)$(INC)
 
 SRC_PATH = srcs/
-SRC_NAME = fractol.c
+SRC_NAME = fractol.c events.c move.c
 
 OBJ_PATH = obj/
 OBJ_NAME = $(SRC_NAME:.c=.o)
