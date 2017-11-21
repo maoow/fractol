@@ -1,9 +1,11 @@
 #include "fractol.h"
 
 
-void			quit()
+void			quit(t_fractenv *env)
 {
-	exit(0);
+env->x = -3;
+env->y = -2;
+	//exit(0);
 }
 
 int		g_button[B_NB] =
@@ -72,6 +74,16 @@ int			loopachieved(t_fractenv *env)
 	//}
 //	printf("x: %f y: %f z: %f\nzoom: %d\n\n", env->rotate.x, env->rotate.y, env->rotate.z,env->zoom);
 }
+int			mousemove(int x,int y, t_fractenv *env)
+{
+	size_t		count;
+
+	count = 0;
+ft_printf(
+"%d,%d\n" , x, y
+);
+}
+
 int			buttonpressed(int key,int x,int y, t_fractenv *env)
 {
 	size_t		count;
