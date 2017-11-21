@@ -1,5 +1,4 @@
 #include "fractol.h"
-
 void			mouserotate(t_fractenv *env)
 {
 }
