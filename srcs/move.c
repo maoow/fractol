@@ -54,9 +54,3 @@ env->y -= (env->y + env->height / 2);
 env->zoom /= 2;
 }
 }
-void			harder(t_fractenv *env)
-{
-}
-void			smoother(t_fractenv *env)
-{
-}
