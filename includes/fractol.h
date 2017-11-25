@@ -31,6 +31,8 @@ typedef struct	s_fractenv
 	void	*win;
 	void		*img;
 	unsigned int	*imgstr;
+	void		*img2;
+	unsigned int	*imgstr2;
 	t_pixel	mouse;
 	size_t	i;
 int key;
