@@ -35,9 +35,12 @@ typedef struct	s_fractenv
 	size_t	i;
 int key;
 
+	size_t	op;
+	void	*opt[3];
 int end;
 int sl;
 int bpp;
+
 }		t_fractenv;
 int			keypressed(int key, t_fractenv *env);
 int			buttonpressed(int key,int x,int y, t_fractenv *env);
