@@ -53,9 +53,7 @@ void		(*g_keyf[K_NB])() =
 	&higher,
 	&lower,
 	&zoom,
-	&dezoom,
-	&harder,
-	&smoother
+	&dezoom
 };
 
 int			loop(int key,int x,int y, t_fractenv *env)
@@ -75,11 +73,17 @@ int			loopachieved(t_fractenv *env)
 int			mousemove(int x,int y, t_fractenv *env)
 {
 	size_t		count;
+static int test = 0;
 
+if (test % 100 == 0)
+{
 	count = 0;
 ft_printf( "%d,%d\n" , env->x, env->y);
 env->mouse.x = x;
 env->mouse.y = y;
+fract(env, &mand);
+}
+test++;
 }
 
 int			buttonpressed(int key,int x,int y, t_fractenv *env)
