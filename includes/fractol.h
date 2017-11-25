@@ -24,12 +24,20 @@ typedef struct	s_fractenv
 	double	zoom;
 	double	x;
 	double	y;
+	int	width;
+	int	height;
 	size_t	it_max;
 	void	*mlx;
 	void	*win;
 	void		*img;
 	unsigned int	*imgstr;
+	t_pixel	mouse;
+	size_t	i;
 int key;
+
+int end;
+int sl;
+int bpp;
 }		t_fractenv;
 int			keypressed(int key, t_fractenv *env);
 int			buttonpressed(int key,int x,int y, t_fractenv *env);
