@@ -3,9 +3,7 @@
 
 void			quit(t_fractenv *env)
 {
-env->x = -3;
-env->y = -2;
-	//exit(0);
+	exit(0);
 }
 
 int		g_button[B_NB] =
@@ -79,9 +77,9 @@ int			mousemove(int x,int y, t_fractenv *env)
 	size_t		count;
 
 	count = 0;
-ft_printf(
-"%d,%d\n" , x, y
-);
+ft_printf( "%d,%d\n" , env->x, env->y);
+env->mouse.x = x;
+env->mouse.y = y;
 }
 
 int			buttonpressed(int key,int x,int y, t_fractenv *env)
@@ -113,5 +111,3 @@ int			keypressed(int key, t_fractenv *env)
 		ft_printf("%d\n", key);
 	fract(env, &mand);
 }
-
-
