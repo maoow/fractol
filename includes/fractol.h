@@ -54,6 +54,5 @@ void			higher(t_fractenv *env);
 void			lower(t_fractenv *env);
 void			zoom(t_fractenv *env);
 void			dezoom(t_fractenv *env);
-void			harder(t_fractenv *env);
-void			smoother(t_fractenv *env);
 void			mand(t_fractenv *env, t_pixel pixel);
+void	fract(t_fractenv *env, void	(op(t_fractenv *, t_pixel)));
