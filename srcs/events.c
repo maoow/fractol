@@ -73,17 +73,16 @@ int			loopachieved(t_fractenv *env)
 int			mousemove(int x,int y, t_fractenv *env)
 {
 	size_t		count;
-static int test = 0;
+//static int test = 0;
 
-if (test % 100 == 0)
-{
+//if (test % 100 == 0)
+//{
 	count = 0;
 ft_printf( "%d,%d\n" , env->x, env->y);
 env->mouse.x = x;
 env->mouse.y = y;
-fract(env, &mand);
-}
-test++;
+//}
+//test++;
 }
 
 int			buttonpressed(int key,int x,int y, t_fractenv *env)
@@ -98,7 +97,7 @@ int			buttonpressed(int key,int x,int y, t_fractenv *env)
 			g_buttonf[count](env);
 		count++;
 	}
-	fract(env, &mand);
+	fract(env, env->opt[env->op]);
 }
 
 int			keypressed(int key, t_fractenv *env)
@@ -113,5 +112,5 @@ int			keypressed(int key, t_fractenv *env)
 		g_keyf[count](env);
 	else
 		ft_printf("%d\n", key);
-	fract(env, &mand);
+	fract(env, env->opt[env->op]);
 }

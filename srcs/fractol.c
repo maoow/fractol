@@ -12,10 +12,10 @@ void	csquare(t_pixel *z)
 
 void	increasepixel(t_fractenv *env, t_pixel pixel, int color)
 {
-	pixel.y += 6;
 	pixel.y *= env->zoom;
-	pixel.x += 3;
+	pixel.y += env->zoom * 2;
 	pixel.x *= env->zoom;
+	pixel.x += env->zoom * 1.5;
 	if (pixel.y  < env->width && pixel.x < env->height && pixel.y >=0 && pixel.x >= 0)
 		if (env->imgstr[(int)pixel.y + (int)pixel.x * env->width] < 0x1000000)
 			env->imgstr[(int)pixel.y + (int)pixel.x * env->width] += (unsigned int)color;
@@ -51,7 +51,7 @@ void	julia(t_fractenv *env, t_pixel pixel)
 	else
 		addpixel(env, pixel, i * env->i);
 }
-void	frmod(t_fractenv *env, t_pixel pixel)
+void	mand(t_fractenv *env, t_pixel pixel)
 {
 	size_t	i;
 	t_pixel	z;
@@ -74,7 +74,7 @@ void	frmod(t_fractenv *env, t_pixel pixel)
 	else
 		addpixel(env, pixel, i * env->i);
 }
-void	mand(t_fractenv *env, t_pixel pixel)
+void	buddha(t_fractenv *env, t_pixel pixel)
 {
 	size_t	i;
 	t_pixel	z;
@@ -124,17 +124,22 @@ void	fract(t_fractenv *env, void	(op(t_fractenv *, t_pixel)))
 		}
 		z.x++;
 	}
+
+
+/*
 int fd;
 fd = open("test.map", O_WRONLY);
 write(fd, env->imgstr, env->width * env->height * sizeof(unsigned int) / sizeof(char));
 exit(0);
+*/
+
 	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 }
 
 void	init(t_fractenv *env)
 {
 	env->mlx = mlx_init();
-	env->zoom = 100;
+	env->zoom = 300;
 	env->width = 1200;
 	env->height = 600;
 	env->mouse.x = 0;
@@ -144,19 +149,23 @@ void	init(t_fractenv *env)
 	env->min = -1000;
 	env->max = 9;
 	env->win = mlx_new_window(env->mlx, env->width, env->height, "fract");
-	env->it_max = 200000;
-	env->i = 257;
+env->op = 0;
+env->opt[0] = &mand;
+env->opt[1] = &julia;
+env->opt[2] = &buddha;
+	env->img = mlx_new_image(env->mlx, env->width, env->height);
+	env->imgstr = (unsigned int *)mlx_get_data_addr(env->img, &env->bpp, &env->sl, &env->end);
+int fd;
+fd = open("test.map", O_RDONLY);
+read(fd, env->imgstr,2880000);
+	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
+
+	env->it_max = 200;
+	env->i = 256;
 }
 void	mloop(t_fractenv *env)
 {
-	int speed = 100;
-	//if (env->mouse.x)
-	//{
-	//env->x += (env->mouse.x - env->width / 2) /  speed * 2;
-	//env->y += (env->mouse.y - env->height / 2) /  speed * 2;
-	//env->zoom += env->zoom / speed;
-	//fract(env, &mand);
-	//}
+	fract(env, env->opt[env->op]);
 }
 
 int	main()
@@ -164,10 +173,10 @@ int	main()
 	t_fractenv env;
 
 	init(&env);
-	fract(&env, &mand);
+	fract(&env, env.opt[env.op]);
 	mlx_key_hook(env.win, &keypressed, &env);
 	mlx_hook(env.win, MN, MM, &mousemove, &env);
-	//	mlx_loop_hook(env.mlx, &mloop, &env);
+		mlx_loop_hook(env.mlx, &mloop, &env);
 	mlx_mouse_hook(env.win, &buttonpressed, &env);
 	mlx_loop(env.mlx);
 }

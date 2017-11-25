@@ -11,7 +11,11 @@ env->x-= env->width / 4;
 }
 void			up(t_fractenv *env)
 {
-env->y-= env->height / 4;
+//env->y-= env->height / 4;
+if (env->op < 2)
+env->op++;
+else
+env->op = 0;
 }
 void			down(t_fractenv *env)
 {
@@ -27,6 +31,7 @@ env->it_max += 10;
 }
 void			lower(t_fractenv *env)
 {
+if (env->it_max > 10)
 env->it_max -= 10;
 }
 void			zoom(t_fractenv *env)
@@ -39,11 +44,14 @@ env->y += (env->y + env->height / 2) / 10;
 env->zoom += (env->zoom / 10) * speed;
 env->x += ((env->mouse.x - env->width / 2) / 10);// * sqrt(env->zoom);
 env->y += ((env->mouse.y - env->height / 2) /  10); //* sqrt(env->zoom);
-	fract(env, &mand);
+	fract(env, env->opt[env->op]);
 }
-//env->zoom *= 2;
-//env->x += (env->x + env->width / 2);
-//env->y += (env->y + env->height / 2);
+else
+{
+env->zoom *= 2;
+env->x += (env->x + env->width / 2);
+env->y += (env->y + env->height / 2);
+}
 }
 void			dezoom(t_fractenv *env)
 {
