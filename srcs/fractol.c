@@ -6,7 +6,7 @@
 /*   By: cbinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 14:43:11 by cbinet            #+#    #+#             */
-/*   Updated: 2017/11/28 14:54:17 by cbinet           ###   ########.fr       */
+/*   Updated: 2017/11/28 16:13:44 by cbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	init(t_fractenv *env)
 			(env->width - 2000) / 2, (env->height - 1000) / 4);
 	close(fd);
 	env->it_max = 10;
-	env->i = 0x000300;
+	env->i = 0x000100;
 	env->mod = true;
 }
 

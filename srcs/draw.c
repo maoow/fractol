@@ -6,7 +6,7 @@
 /*   By: cbinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 14:17:10 by cbinet            #+#    #+#             */
-/*   Updated: 2017/11/28 14:38:13 by cbinet           ###   ########.fr       */
+/*   Updated: 2017/11/28 16:29:42 by cbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,7 @@ void	increasepixel(t_fractenv *env, t_pixel pixel, int color)
 
 void	addpixel(t_fractenv *env, t_pixel pixel, int color)
 {
+	if (color >= env->i * 0x100)
+		color = env->i * 0xff;
 	env->imgstr[(int)pixel.x + (int)pixel.y * env->width] = (unsigned int)color;
 }
