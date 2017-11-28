@@ -6,21 +6,22 @@
 #    By: cbinet <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/17 12:55:51 by cbinet            #+#    #+#              #
-#    Updated: 2017/11/17 13:37:58 by cbinet           ###   ########.fr        #
+#    Updated: 2017/11/28 14:19:30 by cbinet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fractol
 
+MLX=mlx
 CC = gcc
-CFLAGS = -framework OpenGL -framework AppKit -lmlx -lXext -lX11
-LFLAGS = -IGL -IGLUT -lXext -lX11 -lm
+LFLAGS = -framework OpenGL -framework AppKit -lmlx #-lXext -lX11
+CFLAGS = -IGL -IGLUT -lXext -lX11 -lm
 DEBUG =
 DEBUG2 = -g -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer
-CPPFLAGS = -iquote includes/minilibx -iquote includes -iquote $(LIB_PATH)$(INC)
+CPPFLAGS = -iquote includes/$(MLX) -iquote includes -iquote $(LIB_PATH)$(INC)
 
 SRC_PATH = srcs/
-SRC_NAME = fractol.c events.c move.c
+SRC_NAME = fractol.c events.c move.c fractales.c draw.c
 
 OBJ_PATH = obj/
 OBJ_NAME = $(SRC_NAME:.c=.o)
@@ -28,11 +29,11 @@ SRCS = $(addprefix $(SRC_PATH), $(SRC_NAME))
 OBJS = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
 INC = includes/
 LIB_PATH := libft/
-LIB := $(LIB_PATH)libftprintf.a  $(INC)minilibx/libmlx.a
+LIB := $(LIB_PATH)libftprintf.a  $(INC)$(MLX)/libmlx.a
 LIB_INCLUDE := $(LIB_PATH)$(INC)libft.h			\
 				$(LIB_PATH)$(INC)get_next_line.h\
 				$(LIB_PATH)$(INC)ft_printf.h \
-				$(INC)minilibx/mlx.h
+				$(INC)$(MLX)/mlx.h
 HEADER := $(LIB_INCLUDE)						\
 		 includes/fractol.h
 
@@ -52,7 +53,7 @@ $(OBJ_PATH):
 	@mkdir -p $@
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c $(HEADER) $(LIB)
-	$(CC) $(LFLAGS) $(DEBUG) $(CPPFLAGS) -c $< -o $@
+	$(CC) $(DEBUG) $(CPPFLAGS) -c $< -o $@
 
 .PHONY:clean
 clean:
