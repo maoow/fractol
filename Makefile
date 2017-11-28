@@ -6,7 +6,7 @@
 #    By: cbinet <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/17 12:55:51 by cbinet            #+#    #+#              #
-#    Updated: 2017/11/28 14:19:30 by cbinet           ###   ########.fr        #
+#    Updated: 2017/11/28 16:02:07 by cbinet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ $(NAME): $(OBJS)
 .PHONY:lib
 lib:
 	@make -C libft
+	@make -C includes/$(MLX)
 	
 $(OBJS): | $(OBJ_PATH)
 
@@ -58,6 +59,7 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c $(HEADER) $(LIB)
 .PHONY:clean
 clean:
 	@make clean -C libft
+	@make clean -C includes/$(MLX)
 	@rm -rf $(OBJ_PATH)
 	@echo "\033[31mObjects files removed.\033[0m"
 
