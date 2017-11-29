@@ -4,6 +4,8 @@
 #include "ft_printf.h"
 #include "libft.h"
 #include "get_next_line.h"
+#include <time.h>
+#include <stdio.h>
 #define K_NB 9
 #define B_NB 5
 #define MN 6
@@ -34,16 +36,19 @@ typedef struct	s_fractenv
 	void		*img2;
 	unsigned int	*imgstr2;
 	t_pixel	mouse;
+	t_pixel	mouse2;
 	size_t	i;
 	int key;
 
 	size_t	op;
 	void	*opt[3];
+	char	*opc[3];
 	int end;
 	int sl;
 	int bpp;
-
 	bool mod;
+	bool move;
+	bool verbose;
 }		t_fractenv;
 int			keypressed(int key, t_fractenv *env);
 int			buttonpressed(int key,int x,int y, t_fractenv *env);
@@ -53,6 +58,7 @@ int			mloop(t_fractenv *env);
 
 void			mouserotate(t_fractenv *env);
 void			center(t_fractenv *env);
+void			move(t_fractenv *env);
 void			left(t_fractenv *env);
 void			up(t_fractenv *env);
 void			down(t_fractenv *env);
@@ -65,8 +71,10 @@ void			mand(t_fractenv *env, t_pixel pixel);
 void			julia(t_fractenv *env, t_pixel pixel);
 void			buddha(t_fractenv *env, t_pixel pixel);
 void	fract(t_fractenv *env, void	(op(t_fractenv *, t_pixel)));
+void	increasepixel(t_fractenv *env, t_pixel pixel, unsigned int color);
+void	addpixel(t_fractenv *env, t_pixel pixel, int color);
 
-
+/*
 #define K_Q			12
 #define K_ESC		53
 #define K_H			4
@@ -93,3 +101,31 @@ void	fract(t_fractenv *env, void	(op(t_fractenv *, t_pixel)));
 #define K_X			7
 #define K_POINT		44
 #define K_SLASH		47
+*/
+ #define K_Q 113
+ #define K_ESC 65307
+ #define K_H 104
+ #define K_J 106
+ #define K_K 107
+ #define K_L 108
+ #define K_M 109
+ #define K_F 102
+ #define K_D 100
+ #define K_COMMA 44
+ #define K_Y 121
+ #define K_U 117
+ #define K_I 105
+ #define K_O 111
+ #define K_7 55
+ #define K_8 56
+ #define K_A 97
+ #define K_S 115
+ #define K_E 101
+ #define K_R 114
+ #define K_C 99
+ #define K_V 118
+ #define K_Z 122
+ #define K_X 120
+ #define K_POINT 46
+ #define K_SLASH 47
+ #define K_SPACE 32
