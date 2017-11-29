@@ -54,7 +54,7 @@ void		(*g_keyf[K_NB])() =
 	&left,
 	&down,
 	&up,
-	&right,
+	&move,
 	&higher,
 	&lower,
 	&zoom,
@@ -65,8 +65,8 @@ int			mloop(t_fractenv *env)
 {
 	if (env->mod)
 	{
-		fract(env, env->opt[env->op]);
 		env->mod =false;
+		fract(env, env->opt[env->op]);
 	}
 	return (0);
 }
@@ -85,12 +85,15 @@ int			mousemove(int x, int y, t_fractenv *env)
 {
 	size_t		count;
 
+if (env->move && env->op == 1)
+{
 	count = 0;
-	ft_printf("%d,%d\n", env->x, env->y);
+	env->mouse2.x = x;
+	env->mouse2.y = y;
+			env->mod = true;
+}
 	env->mouse.x = x;
 	env->mouse.y = y;
-	if (env->op == 1)
-			env->mod = true;
 	return (0);
 }
 
@@ -109,7 +112,7 @@ int			buttonpressed(int key, int x, int y, t_fractenv *env)
 		}
 		count++;
 	}
-	fract(env, env->opt[env->op]);
+//	fract(env, env->opt[env->op]);
 	return (0);
 }
 
@@ -128,6 +131,6 @@ int			keypressed(int key, t_fractenv *env)
 	}
 	else
 		ft_printf("%d\n", key);
-	fract(env, env->opt[env->op]);
+//	fract(env, env->opt[env->op]);
 	return (0);
 }

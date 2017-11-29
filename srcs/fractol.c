@@ -26,9 +26,11 @@ void	init(t_fractenv *env)
 	int fd;
 
 	env->mlx = mlx_init();
-	env->width = 2000;
-	env->height = 1350;
-	env->zoom = env->width / 2;
+	env->verbose = true;
+	env->move = true;
+	env->width = 1000;
+	env->height = 550;
+	env->zoom = env->width / 4;
 	env->mouse.x = 0;
 	env->mouse.y = 0;
 	env->x = -env->width / 2;
@@ -36,10 +38,13 @@ void	init(t_fractenv *env)
 	env->min = -1000;
 	env->max = 9;
 	env->win = mlx_new_window(env->mlx, env->width, env->height, "fract");
-	env->op = 0;
+	env->op = 2;
 	env->opt[0] = &mand;
 	env->opt[1] = &julia;
 	env->opt[2] = &buddha;
+	env->opc[0] = ft_strdup("mand");
+	env->opc[1] = ft_strdup("julia");
+	env->opc[2] = ft_strdup("buddha");
 	env->img2 = mlx_new_image(env->mlx, 2000, 1000);
 	env->imgstr2 = (unsigned int *)mlx_get_data_addr(env->img2, &env->bpp,
 			&env->sl, &env->end);
@@ -48,7 +53,7 @@ void	init(t_fractenv *env)
 	mlx_put_image_to_window(env->mlx, env->win, env->img2,
 			(env->width - 2000) / 2, (env->height - 1000) / 4);
 	close(fd);
-	env->it_max = 10;
+	env->it_max = 100;
 	env->i = 0x000100;
 	env->mod = true;
 }
@@ -58,7 +63,8 @@ int		main(void)
 	t_fractenv env;
 
 	init(&env);
-	fract(&env, env.opt[env.op]);
+ft_printf("max%d\n",env.it_max);
+	//fract(&env, env.opt[env.op]);
 	mlx_key_hook(env.win, &keypressed, &env);
 	mlx_hook(env.win, MN, MM, &mousemove, &env);
 	mlx_loop_hook(env.mlx, &mloop, &env);

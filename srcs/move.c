@@ -12,12 +12,18 @@
 
 #include "fractol.h"
 
+void			move(t_fractenv *env)
+{
+env->move = !env->move;
+}
 void			left(t_fractenv *env)
 {
 	if (env->i < 0x010000)
 		env->i *= 256;
 	else
 		env->i = 1;
+if (env->verbose)
+	ft_printf("color mult: %d\n", env->i);
 }
 
 void			up(t_fractenv *env)
@@ -28,6 +34,8 @@ void			up(t_fractenv *env)
 		env->op++;
 	else
 		env->op = 0;
+if (env->verbose)
+	ft_printf("fractale : %s\n", env->opc[env->op]);
 }
 
 void			down(t_fractenv *env)
@@ -38,6 +46,8 @@ void			down(t_fractenv *env)
 		env->op--;
 	else
 		env->op = 2;
+if (env->verbose)
+	ft_printf("fractale : %s\n", env->opc[env->op]);
 }
 
 void			right(t_fractenv *env)
@@ -46,17 +56,23 @@ void			right(t_fractenv *env)
 		env->i /= 256;
 	else
 		env->i = 0x010000;
+if (env->verbose)
+	ft_printf("color mult: %d\n", env->i);
 }
 
 void			higher(t_fractenv *env)
 {
-	env->it_max += env->it_max / 10;
+	env->it_max += env->it_max / 2;
+if (env->verbose)
+	ft_printf("it_max: %d\n", env->it_max);
 }
 
 void			lower(t_fractenv *env)
 {
 	if (env->it_max > 10)
 		env->it_max -= env->it_max / 10;
+if (env->verbose)
+	ft_printf("it_max: %d\n", env->it_max);
 }
 
 void			zoom(t_fractenv *env)
@@ -71,7 +87,7 @@ void			zoom(t_fractenv *env)
 		env->zoom += (env->zoom / 10) * speed;
 		env->x += ((env->mouse.x - env->width / 2) / 10);
 		env->y += ((env->mouse.y - env->height / 2) / 10);
-		fract(env, env->opt[env->op]);
+		//fract(env, env->opt[env->op]);
 	}
 	else
 	{
@@ -79,6 +95,8 @@ void			zoom(t_fractenv *env)
 		env->x += (env->x + env->width / 2);
 		env->y += (env->y + env->height / 2);
 	}
+if (env->verbose)
+	ft_printf("zoom: %d\n", env->zoom);
 }
 
 void			dezoom(t_fractenv *env)
@@ -93,7 +111,7 @@ void			dezoom(t_fractenv *env)
 		env->y -= (env->y + env->height / 2) / 10;
 		env->x -= ((env->mouse.x - env->width / 2) / 10);
 		env->y -= ((env->mouse.y - env->height / 2) / 10);
-		fract(env, env->opt[env->op]);
+		//fract(env, env->opt[env->op]);
 	}
 	else
 	{
@@ -101,4 +119,6 @@ void			dezoom(t_fractenv *env)
 		env->y -= (env->y + env->height / 2);
 		env->zoom /= 2;
 	}
+	if (env->verbose)
+	ft_printf("zoom: %d\n", env->zoom);
 }
