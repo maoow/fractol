@@ -6,7 +6,7 @@
 /*   By: cbinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 14:43:11 by cbinet            #+#    #+#             */
-/*   Updated: 2017/11/28 16:13:44 by cbinet           ###   ########.fr       */
+/*   Updated: 2017/11/30 18:42:14 by cbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,15 @@ void	init(t_fractenv *env)
 	env->mlx = mlx_init();
 	env->verbose = true;
 	env->move = true;
-	env->width = 1000;
-	env->height = 550;
-	env->zoom = env->width / 4;
+	env->width = 2500;
+	env->height = 1350;
+	env->zoom = env->width / 8;
 	env->mouse.x = 0;
 	env->mouse.y = 0;
 	env->x = -env->width / 2;
-	env->y = -env->height / 2;
-	env->min = -1000;
-	env->max = 9;
+	env->y = -(2 * env->height) / 3;
+	env->min = -env->height / 2;
+	env->max = env->height / 2;
 	env->win = mlx_new_window(env->mlx, env->width, env->height, "fract");
 	env->op = 2;
 	env->opt[0] = &mand;
@@ -45,6 +45,7 @@ void	init(t_fractenv *env)
 	env->opc[0] = ft_strdup("mand");
 	env->opc[1] = ft_strdup("julia");
 	env->opc[2] = ft_strdup("buddha");
+/*
 	env->img2 = mlx_new_image(env->mlx, 2000, 1000);
 	env->imgstr2 = (unsigned int *)mlx_get_data_addr(env->img2, &env->bpp,
 			&env->sl, &env->end);
@@ -53,7 +54,8 @@ void	init(t_fractenv *env)
 	mlx_put_image_to_window(env->mlx, env->win, env->img2,
 			(env->width - 2000) / 2, (env->height - 1000) / 4);
 	close(fd);
-	env->it_max = 2;
+	*/
+	env->it_max = 5;
 	env->i = 0x000001;
 	env->mod = true;
 }

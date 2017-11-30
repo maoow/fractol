@@ -6,7 +6,7 @@
 /*   By: cbinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 14:40:01 by cbinet            #+#    #+#             */
-/*   Updated: 2017/11/28 15:00:37 by cbinet           ###   ########.fr       */
+/*   Updated: 2017/11/30 13:38:14 by cbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int			mloop(t_fractenv *env)
 		env->mod =false;
 		fract(env, env->opt[env->op]);
 	}
+//	higher(env);
+//		env->mod =true;
 	return (0);
 }
 
@@ -85,12 +87,13 @@ int			mousemove(int x, int y, t_fractenv *env)
 {
 	size_t		count;
 
-if (env->move && env->op == 1)
+if (env->move && env->op == 1 && x >= 0 && y >= 0 && x <= env->width && y <= env->height)
 {
 	count = 0;
 	env->mouse2.x = x;
 	env->mouse2.y = y;
 			env->mod = true;
+//		put_loading_logo(env);
 }
 	env->mouse.x = x;
 	env->mouse.y = y;
@@ -122,6 +125,7 @@ int			keypressed(int key, t_fractenv *env)
 
 		if (!env->mod)
 {
+	put_loading_logo(env);
 	count = 0;
 	env->key = key;
 	while (count < K_NB && key != g_key[count])

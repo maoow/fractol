@@ -6,7 +6,7 @@
 /*   By: cbinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 14:11:57 by cbinet            #+#    #+#             */
-/*   Updated: 2017/11/28 16:12:17 by cbinet           ###   ########.fr       */
+/*   Updated: 2017/11/30 13:41:20 by cbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	mand(t_fractenv *env, t_pixel pixel)
 	t_pixel	z;
 	t_pixel	p;
 
-	p.x = (((pixel.x - 2 + env->x) / env->zoom));
-	p.y = (((pixel.y - 2 + env->y) / env->zoom));
+	p.x = (((pixel.x + env->x) / env->zoom));
+	p.y = (((pixel.y + env->y) / env->zoom));
 	z.x = 0;
 	z.y = 0;
 	i = 0;
@@ -62,31 +62,6 @@ void	mand(t_fractenv *env, t_pixel pixel)
 		addpixel(env, pixel, i * env->i);
 }
 
-static void	increasemap(t_fractenv *env, bool *map, size_t size)
-{
-	size_t	i;
-	
-	i = 0;
-	while (i < size)
-	{
-		if (map[i])
-			env->imgstr[i]++;// env->i;
-		i++;
-	}
-}
-
-static void	initmap(bool **map, size_t size)
-{
-	size_t	i;
-	
-	i = 0;
-*map = malloc(size * sizeof(bool));
-	while (i < size)
-	{
-		(*map)[i] = false;
-		i++;
-	}
-}
 
 void	buddha(t_fractenv *env, t_pixel pixel)
 {
@@ -94,28 +69,23 @@ void	buddha(t_fractenv *env, t_pixel pixel)
 	t_pixel	z;
 	t_pixel	p;
 	unsigned int color;
-//	bool		*map;
 
-//	initmap(&map, (size_t)env->width * (size_t)env->height);
 	color = 0x1;
-	p.x = ((pixel.x - env->width / 2) / env->zoom);
-	p.y = ((pixel.y - env->height / 2) / env->zoom);
-	z.x = 0;
-	z.y = 0;
+	p.x = ((pixel.y + env->x) / env->zoom);
+	p.y = ((pixel.x + env->y) / env->zoom);
+	z.x = ((pixel.y + env->x) / env->zoom);
+	z.y = ((pixel.x + env->y) / env->zoom);
 	i = 0;
 	while (i < env->it_max && z.x * z.x + z.y * z.y < env->max &&
-			(z.x * z.x + z.y * z.y > env->min || i == 0))
+			(z.x * z.x + z.y * z.y > env->min ))
 	{
 		csquare(&z);
 		z.x += p.x;
 		z.y += p.y;
-//		if (z.y < env->width && z.x < env->height && z.y >= 0 && z.x >= 0)
-//			map[(size_t)z.x * (size_t)z.y] = true;
 		i++;
 	}
 	if (i != env->it_max)
 	{
-//	increasemap(env, map, env->width * env->height);
 		z.x = 0;
 		z.y = 0;
 		while (i > 0)
@@ -123,10 +93,29 @@ void	buddha(t_fractenv *env, t_pixel pixel)
 			csquare(&z);
 			z.x += p.x;
 			z.y += p.y;
-			increasepixel(env, z, color);
+			increasepixel(env, z, env->i);
 			i--;
 		}
 	}
+}
+
+void	put_loading_logo(t_fractenv *env)
+{
+	void	*img;
+	unsigned int *imgstr;
+	size_t		i;
+
+	i = 0;
+	img = mlx_new_image(env->mlx, env->width / 100, env->height / 100);
+	imgstr = (unsigned int *)mlx_get_data_addr(img, &env->bpp, &env->sl, &env->end);
+	while (i < (env->width / 100) * (env->height / 100))
+	{
+		imgstr[i] = 0xff00;
+		i++;
+	}
+	mlx_put_image_to_window(env->mlx, env->win, img, env->width / 100, env->height / 100);
+	mlx_destroy_image(env->mlx, img);
+	
 }
 
 void	fract(t_fractenv *env, void (op(t_fractenv *, t_pixel)))
@@ -152,6 +141,7 @@ void	fract(t_fractenv *env, void (op(t_fractenv *, t_pixel)))
 		z.x++;
 	}
 	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
+	mlx_destroy_image(env->mlx, env->img);
 	if (env->verbose)
 	{
 		t2 = clock();
