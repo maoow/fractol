@@ -53,8 +53,8 @@ void	init(t_fractenv *env)
 	mlx_put_image_to_window(env->mlx, env->win, env->img2,
 			(env->width - 2000) / 2, (env->height - 1000) / 4);
 	close(fd);
-	env->it_max = 100;
-	env->i = 0x000100;
+	env->it_max = 2;
+	env->i = 0x000001;
 	env->mod = true;
 }
 

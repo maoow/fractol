@@ -120,6 +120,8 @@ int			keypressed(int key, t_fractenv *env)
 {
 	size_t		count;
 
+		if (!env->mod)
+{
 	count = 0;
 	env->key = key;
 	while (count < K_NB && key != g_key[count])
@@ -132,5 +134,6 @@ int			keypressed(int key, t_fractenv *env)
 	else
 		ft_printf("%d\n", key);
 //	fract(env, env->opt[env->op]);
+}
 	return (0);
 }

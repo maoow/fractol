@@ -57,9 +57,35 @@ void	mand(t_fractenv *env, t_pixel pixel)
 		i++;
 	}
 	if (i == env->it_max)
-		addpixel(env, pixel, 0xff * env->i);
+		addpixel(env, pixel, 0x0);
 	else
 		addpixel(env, pixel, i * env->i);
+}
+
+static void	increasemap(t_fractenv *env, bool *map, size_t size)
+{
+	size_t	i;
+	
+	i = 0;
+	while (i < size)
+	{
+		if (map[i])
+			env->imgstr[i]++;// env->i;
+		i++;
+	}
+}
+
+static void	initmap(bool **map, size_t size)
+{
+	size_t	i;
+	
+	i = 0;
+*map = malloc(size * sizeof(bool));
+	while (i < size)
+	{
+		(*map)[i] = false;
+		i++;
+	}
 }
 
 void	buddha(t_fractenv *env, t_pixel pixel)
@@ -67,8 +93,11 @@ void	buddha(t_fractenv *env, t_pixel pixel)
 	size_t	i;
 	t_pixel	z;
 	t_pixel	p;
-unsigned int color;
+	unsigned int color;
+//	bool		*map;
 
+//	initmap(&map, (size_t)env->width * (size_t)env->height);
+	color = 0x1;
 	p.x = ((pixel.x - env->width / 2) / env->zoom);
 	p.y = ((pixel.y - env->height / 2) / env->zoom);
 	z.x = 0;
@@ -80,39 +109,21 @@ unsigned int color;
 		csquare(&z);
 		z.x += p.x;
 		z.y += p.y;
+//		if (z.y < env->width && z.x < env->height && z.y >= 0 && z.x >= 0)
+//			map[(size_t)z.x * (size_t)z.y] = true;
 		i++;
 	}
 	if (i != env->it_max)
 	{
+//	increasemap(env, map, env->width * env->height);
 		z.x = 0;
 		z.y = 0;
-if (env->move)
-{
-if (i < env->it_max / 4)
-color = (env->i * 0x100);
-else if (i < env->it_max / 2)
-color = env->i;
-else
-color = (env->i * 0x10000) % 0x1000000;
-///////if (color >= 0x1000000)
-///////color %= 0x1000000;
-}
 		while (i > 0)
 		{
-if (!env->move)
-{
-if (i < env->it_max / 4)
-color = (env->i * 0x100) % 0x1000000;
-else if (i < env->it_max / 2)
-color = env->i;
-else
-color = (env->i * 0x10000) % 0x1000000;
-//color %= 0x1000000;
-}
-			increasepixel(env, z, color);
 			csquare(&z);
 			z.x += p.x;
 			z.y += p.y;
+			increasepixel(env, z, color);
 			i--;
 		}
 	}
@@ -124,8 +135,8 @@ void	fract(t_fractenv *env, void (op(t_fractenv *, t_pixel)))
 	clock_t t;	
 	clock_t t2;	
 
-if (env->verbose)
-	t = clock();
+	if (env->verbose)
+		t = clock();
 	env->img = mlx_new_image(env->mlx, env->width, env->height);
 	env->imgstr = (unsigned int *)mlx_get_data_addr(env->img, &env->bpp,
 			&env->sl, &env->end);
@@ -141,11 +152,11 @@ if (env->verbose)
 		z.x++;
 	}
 	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
-if (env->verbose)
-{
-	t2 = clock();
-	printf("time taken to calculate: %5.5f\n",(double)((double)(t2 - t) / CLOCKS_PER_SEC));
-}
+	if (env->verbose)
+	{
+		t2 = clock();
+		printf("time taken to calculate: %5.5f\n",(double)((double)(t2 - t) / CLOCKS_PER_SEC));
+	}
 }
 /*
    int fd;

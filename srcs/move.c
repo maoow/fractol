@@ -62,15 +62,17 @@ if (env->verbose)
 
 void			higher(t_fractenv *env)
 {
-	env->it_max += env->it_max / 2;
+	env->it_max += env->it_max / 20 + 1;
 if (env->verbose)
 	ft_printf("it_max: %d\n", env->it_max);
 }
 
 void			lower(t_fractenv *env)
 {
-	if (env->it_max > 10)
-		env->it_max -= env->it_max / 10;
+	if (env->it_max > 20)
+		env->it_max-= env->it_max / 20;
+	else if (env->it_max > 1)
+		env->it_max--;
 if (env->verbose)
 	ft_printf("it_max: %d\n", env->it_max);
 }

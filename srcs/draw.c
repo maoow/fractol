@@ -20,19 +20,21 @@ void	increasepixel(t_fractenv *env, t_pixel pixel, unsigned int color)
 	pixel.x += env->width / 2;
 	if (pixel.y < env->width && pixel.x < env->height && pixel.y >= 0 &&
 			pixel.x >= 0)
-{
+	{
 		if (env->imgstr[(int)pixel.y + (int)pixel.x * env->width] + color < 0x1000000)
 			env->imgstr[(int)pixel.y + (int)pixel.x * env->width] +=
 				(unsigned int)color;
-else
-			env->imgstr[(int)pixel.y + (int)pixel.x * env->width] =
-				(env->imgstr[(int)pixel.y + (int)pixel.x * env->width] + color) / 0x1000000;
-}
+		//else
+			//env->imgstr[(int)pixel.y + (int)pixel.x * env->width] =
+				//(env->imgstr[(int)pixel.y + (int)pixel.x * env->width] + color) / 0x1000000;
+	}
 }
 
 void	addpixel(t_fractenv *env, t_pixel pixel, int color)
 {
 	//if (color >= env->i * 0x100)
-		//color = env->i * 0xff;
+	//color = env->i * 0xff;
+color *= 0xff;
+color /= env->it_max;
 	env->imgstr[(int)pixel.x + (int)pixel.y * env->width] = (unsigned int)color;
 }
