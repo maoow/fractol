@@ -13,19 +13,19 @@
 
 typedef struct	s_pixel
 {
-	double	x;
-	double	y;
+	long double	x;
+	long double	y;
 	int	color;
 }		t_pixel;
 
 typedef struct	s_fractenv
 {
-	double	min;
-	double	max;
-	double	size;
-	double	zoom;
-	double	x;
-	double	y;
+	long double	min;
+	long double	max;
+	long double	size;
+	long double	zoom;
+	long double	x;
+	long double	y;
 	int	width;
 	int	height;
 	size_t	it_max;
@@ -41,14 +41,15 @@ typedef struct	s_fractenv
 	int key;
 
 	size_t	op;
-	void	*opt[3];
-	char	*opc[3];
+	void	*opt[6];
+	char	*opc[6];
 	int end;
 	int sl;
 	int bpp;
 	bool mod;
 	bool move;
 	bool verbose;
+	t_pixel *imap;
 }		t_fractenv;
 int			keypressed(int key, t_fractenv *env);
 int			buttonpressed(int key,int x,int y, t_fractenv *env);
@@ -58,6 +59,7 @@ int			mloop(t_fractenv *env);
 
 void			mouserotate(t_fractenv *env);
 void			center(t_fractenv *env);
+void	csquare(t_pixel *z);
 void			move(t_fractenv *env);
 void			left(t_fractenv *env);
 void			up(t_fractenv *env);
@@ -129,3 +131,6 @@ void	addpixel(t_fractenv *env, t_pixel pixel, int color);
  #define K_POINT 46
  #define K_SLASH 47
  #define K_SPACE 32
+void	rbuddha(t_fractenv *env, t_pixel pixel);
+void	rdjulia(t_fractenv *env, t_pixel pixel);
+void	djulia(t_fractenv *env, t_pixel pixel);

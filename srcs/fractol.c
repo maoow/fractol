@@ -14,7 +14,7 @@
 
 void	csquare(t_pixel *z)
 {
-	double	tmp;
+	long double	tmp;
 
 	tmp = z->x;
 	z->x = z->x * z->x - z->y * z->y;
@@ -26,25 +26,43 @@ void	init(t_fractenv *env)
 	int fd;
 
 	env->mlx = mlx_init();
-	env->verbose = true;
-	env->move = true;
-	env->width = 2500;
-	env->height = 1350;
+	env->move = false;
+	env->width = 1350;
+	env->height = 750;
 	env->zoom = env->width / 8;
 	env->mouse.x = 0;
 	env->mouse.y = 0;
 	env->x = -env->width / 2;
 	env->y = -(2 * env->height) / 3;
-	env->min = -env->height / 2;
-	env->max = env->height / 2;
+/*
+	env->x = -156680112740850656;
+	env->y = 136003;
+	env->zoom = 83121335602583760;
+*/
+	env->min = -env->height ;// 2;
+	env->max = env->height ;// 2;
+	env->min = 0;
+	env->max = 4.5;
 	env->win = mlx_new_window(env->mlx, env->width, env->height, "fract");
-	env->op = 2;
+	env->op = 1;
 	env->opt[0] = &mand;
 	env->opt[1] = &julia;
+	env->opt[4] = &djulia;
+	env->opt[5] = &rdjulia;
 	env->opt[2] = &buddha;
+	env->opt[3] = &rbuddha;
 	env->opc[0] = ft_strdup("mand");
 	env->opc[1] = ft_strdup("julia");
+	env->opc[4] = ft_strdup("djulia");
+	env->opc[5] = ft_strdup("rdjulia");
 	env->opc[2] = ft_strdup("buddha");
+	env->opc[3] = ft_strdup("buddhar");
+	env->it_max = 50;
+
+	env->i = 0x000001;
+	env->mod = true;
+	env->verbose = true;
+	env->verbose = true;
 /*
 	env->img2 = mlx_new_image(env->mlx, 2000, 1000);
 	env->imgstr2 = (unsigned int *)mlx_get_data_addr(env->img2, &env->bpp,
@@ -53,11 +71,8 @@ void	init(t_fractenv *env)
 	read(fd, env->imgstr2, 46080000);
 	mlx_put_image_to_window(env->mlx, env->win, env->img2,
 			(env->width - 2000) / 2, (env->height - 1000) / 4);
-	close(fd);
-	*/
-	env->it_max = 5;
-	env->i = 0x000001;
-	env->mod = true;
+			close(fd);
+			*/
 }
 
 int		main(void)
