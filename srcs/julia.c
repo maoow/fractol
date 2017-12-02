@@ -1,6 +1,6 @@
 #include "fractol.h"
 
-void	rdjulia(t_fractenv *env, t_pixel pixel)
+void	tjulia(t_fractenv *env, t_pixel pixel)
 {
 	size_t	i;
 	t_pixel	z;
@@ -12,9 +12,8 @@ void	rdjulia(t_fractenv *env, t_pixel pixel)
 	z.y = (((pixel.y - 2 + env->y) / env->zoom));
 	i = 0;
 	while (++i < env->it_max && (is_bounded(env, z) || i == 0))
-		dju_op(&z, p);
-	if (i == env->it_max)
-		addpixel(env, pixel, i);
+		tju_op(&z, p);
+	addpixel(env, pixel, i);
 }
 
 void	djulia(t_fractenv *env, t_pixel pixel)
@@ -29,9 +28,8 @@ void	djulia(t_fractenv *env, t_pixel pixel)
 	z.y = (((pixel.y - 2 + env->y) / env->zoom));
 	i = 0;
 	while (++i < env->it_max && (is_bounded(env, z) || i == 0))
-		tju_op(&z, p);
-	if (i != env->it_max)
-		addpixel(env, pixel, i * env->i);
+		dju_op(&z, p);
+	addpixel(env, pixel, i );
 }
 
 void	julia(t_fractenv *env, t_pixel pixel)
@@ -47,6 +45,5 @@ void	julia(t_fractenv *env, t_pixel pixel)
 	i = 0;
 	while (++i < env->it_max && (is_bounded(env, z) || i == 0))
 		ju_op(&z, p);
-	if (i != env->it_max)
-		addpixel(env, pixel, i * env->i);
+	addpixel(env, pixel, i);
 }

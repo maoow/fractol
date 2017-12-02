@@ -25,7 +25,7 @@ static void	browse(t_fractenv *env, void (op(t_fractenv *, t_pixel)))
 			z.y++;
 		}
 		if (env->verbose && (int)z.x % 12 == 0)
-			put_loading_logo(env, z.x);
+			put_loading_logo(env, (int)z.x);
 		z.x++;
 	}
 }

@@ -6,7 +6,7 @@
 #include "get_next_line.h"
 #include <time.h>
 #include <stdio.h>
-#define K_NB 9
+#define K_NB 10
 #define B_NB 5
 #define MN 6
 #define MM (1L<<6)
@@ -41,8 +41,8 @@ typedef struct	s_fractenv
 	int key;
 
 	size_t	op;
-	void	*opt[6];
-	char	*opc[6];
+	void	*opt[11];
+	char	*opc[11];
 	int end;
 	int sl;
 	int bpp;
@@ -60,6 +60,7 @@ int			mloop(t_fractenv *env);
 void			mouserotate(t_fractenv *env);
 void			center(t_fractenv *env);
 void	csquare(t_pixel *z);
+void	ccube(t_pixel *z);
 void			move(t_fractenv *env);
 void			left(t_fractenv *env);
 void			up(t_fractenv *env);
@@ -67,6 +68,7 @@ void			down(t_fractenv *env);
 void			right(t_fractenv *env);
 void			higher(t_fractenv *env);
 void			lower(t_fractenv *env);
+void			colorup(t_fractenv *env);
 void			zoom(t_fractenv *env);
 void			dezoom(t_fractenv *env);
 void			mand(t_fractenv *env, t_pixel pixel);
@@ -132,7 +134,9 @@ void	addpixel(t_fractenv *env, t_pixel pixel, int color);
  #define K_SLASH 47
  #define K_SPACE 32
 void	rbuddha(t_fractenv *env, t_pixel pixel);
-void	rdjulia(t_fractenv *env, t_pixel pixel);
+void	tjulia(t_fractenv *env, t_pixel pixel);
+void	tmand(t_fractenv *env, t_pixel pixel);
+void	dmand(t_fractenv *env, t_pixel pixel);
 void	djulia(t_fractenv *env, t_pixel pixel);
 
 

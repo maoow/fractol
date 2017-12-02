@@ -12,31 +12,77 @@
 
 #include "fractol.h"
 
+void			colorup(t_fractenv *env)
+{
+if (env->i < 0x10000)
+	env->i *= 0x100;
+else
+	env->i = 0x1;
+}
+
 void			move(t_fractenv *env)
 {
 	env->move = !env->move;
 }
+
 void			left(t_fractenv *env)
 {
 	env->min += .002;
+printf("%f\n",(double)env->min);
 }
 
 void			up(t_fractenv *env)
 {
-	if (env->op < 5)
+	env->zoom = env->width / 8;
+	env->it_max = 50;
+	env->move = false;
+	env->mouse.x = 0;
+	env->mouse.y = 0;
+	env->mouse2.x = env->width / 2;
+	env->mouse2.y = env->width / 2;
+	env->x = -env->width / 2;
+	env->y = -(env->height) / 2;
+if (env->op < 7 || env->op == 10)
+	env->min = 0;
+	else
+{
+	env->min = 0.12;
+	env->mouse2.x = 3 * env->width / 4;
+	env->mouse2.y = env->height / 2;
+}
+	if (env->op < 10)
 		env->op++;
 	else
 		env->op = 0;
+if (env->op == 3)
+	env->it_max = 500;
 	if (env->verbose)
 		ft_printf("fractale : %s\n", env->opc[env->op]);
 }
 
 void			down(t_fractenv *env)
 {
+	env->zoom = env->width / 8;
+	env->move = false;
+	env->it_max = 50;
+	env->mouse.x = 0;
+	env->mouse.y = 0;
+	env->mouse2.x = env->width / 2;
+	env->mouse2.y = env->width / 2;
+	env->x = -env->width / 2;
+	env->y = -(env->height) / 2;
+if (env->op < 9 && env->op > 0)
+	env->min = 0;
+	else
+{
+	env->min = 0.12;
+	env->mouse2.x = 3 * env->width / 4;
+	env->mouse2.y = env->height / 2;
+}
 	if (env->op > 0)
 		env->op--;
 	else
-		env->op = 5;
+		env->op = 10;
 	if (env->verbose)
 		ft_printf("fractale : %s\n", env->opc[env->op]);
 }

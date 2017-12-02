@@ -71,12 +71,10 @@ unsigned int get_color(t_fractenv *env, size_t i)
 {
 	unsigned int color;
 
-	if (i < env->it_max /100)
-		color= 0x010000;
-	else if (i < 3 * env->it_max /10)
-		color= 0x000100;
+	if (i < 3 * env->it_max /10)
+		color= env->i;
 	else
-		color= 0x000001;
+		color= 0x010101 - env->i;
 	return (color);
 }
 
@@ -94,7 +92,14 @@ void	increasepixel(t_fractenv *env, t_pixel pixel, unsigned int color)
 
 void	addpixel(t_fractenv *env, t_pixel pixel, int color)
 {
-	color *= 0xff;
-	color /= env->it_max;
+	if (color != env->it_max)
+	{
+		color *= 0xff;
+		color /= (int)env->it_max;
+		color %= 0xff;
+		color *= env->i;
+	}
+	else
+		color = env->i * 0xff;
 	env->imgstr[(int)pixel.x + (int)pixel.y * env->width] = (unsigned int)color;
 }

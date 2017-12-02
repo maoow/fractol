@@ -39,11 +39,12 @@ int			g_key[K_NB] =
 {
 	K_Q,
 	K_H,
-	K_J,
 	K_K,
+	K_J,
 	K_L,
 	K_F,
 	K_D,
+	K_U,
 	K_M,
 	K_COMMA
 };
@@ -57,6 +58,7 @@ void		(*g_keyf[K_NB])() =
 	&move,
 	&higher,
 	&lower,
+	&colorup,
 	&zoom,
 	&dezoom
 };
