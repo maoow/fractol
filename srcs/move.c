@@ -14,40 +14,31 @@
 
 void			move(t_fractenv *env)
 {
-env->move = !env->move;
+	env->move = !env->move;
 }
 void			left(t_fractenv *env)
 {
-	if (env->i < 0x010000)
-		env->i *= 256;
-	else
-		env->i = 1;
-if (env->verbose)
-	ft_printf("color mult: %d\n", env->i);
+	env->min += .002;
 }
 
 void			up(t_fractenv *env)
 {
-	mlx_put_image_to_window(env->mlx, env->win, env->img2,
-			(env->width - 2000) / 2, (env->height - 1000) / 4);
-	if (env->op < 2)
+	if (env->op < 5)
 		env->op++;
 	else
 		env->op = 0;
-if (env->verbose)
-	ft_printf("fractale : %s\n", env->opc[env->op]);
+	if (env->verbose)
+		ft_printf("fractale : %s\n", env->opc[env->op]);
 }
 
 void			down(t_fractenv *env)
 {
-	mlx_put_image_to_window(env->mlx, env->win, env->img2,
-			(env->width - 2000) / 2, (env->height - 1000) / 4);
 	if (env->op > 0)
 		env->op--;
 	else
-		env->op = 2;
-if (env->verbose)
-	ft_printf("fractale : %s\n", env->opc[env->op]);
+		env->op = 5;
+	if (env->verbose)
+		ft_printf("fractale : %s\n", env->opc[env->op]);
 }
 
 void			right(t_fractenv *env)
@@ -56,25 +47,28 @@ void			right(t_fractenv *env)
 		env->i /= 256;
 	else
 		env->i = 0x010000;
-if (env->verbose)
-	ft_printf("color mult: %d\n", env->i);
+	if (env->verbose)
+		ft_printf("color mult: %d\n", env->i);
 }
 
 void			higher(t_fractenv *env)
 {
-	env->it_max += env->it_max / 20 + 1;
-if (env->verbose)
-	ft_printf("it_max: %d\n", env->it_max);
+	if (env->it_max > 15)
+		env->it_max += env->it_max / 5;
+	else
+		env->it_max++;
+	if (env->verbose)
+		ft_printf("it_max: %d\n", env->it_max);
 }
 
 void			lower(t_fractenv *env)
 {
-	if (env->it_max > 20)
-		env->it_max-= env->it_max / 20;
+	if (env->it_max > 10)
+		env->it_max-= env->it_max / 5;
 	else if (env->it_max > 1)
 		env->it_max--;
-if (env->verbose)
-	ft_printf("it_max: %d\n", env->it_max);
+	if (env->verbose)
+		ft_printf("it_max: %d\n", env->it_max);
 }
 
 void			zoom(t_fractenv *env)
@@ -84,12 +78,12 @@ void			zoom(t_fractenv *env)
 	speed = 1;
 	if (env->mouse.x)
 	{
-		env->x += (env->x + env->width / 2) / 10;
-		env->y += (env->y + env->height / 2) / 10;
-		env->zoom += (env->zoom / 10) * speed;
-		env->x += ((env->mouse.x - env->width / 2) / 10);
-		env->y += ((env->mouse.y - env->height / 2) / 10);
-		//fract(env, env->opt[env->op]);
+		env->x += (env->x + env->width / 2) / 5;
+		env->y += (env->y + env->height / 2) / 5;
+		env->zoom += (env->zoom / 5) * speed;
+		env->x += ((env->mouse.x - env->width / 2) / 5);
+		env->y += ((env->mouse.y - env->height / 2) / 5);
+		env->it_max += 1;
 	}
 	else
 	{
@@ -97,8 +91,8 @@ void			zoom(t_fractenv *env)
 		env->x += (env->x + env->width / 2);
 		env->y += (env->y + env->height / 2);
 	}
-if (env->verbose)
-	ft_printf("zoom: %d\n", env->zoom);
+	if (env->verbose)
+		ft_printf("zoom: %d\n", env->zoom);
 }
 
 void			dezoom(t_fractenv *env)
@@ -108,12 +102,11 @@ void			dezoom(t_fractenv *env)
 	speed = 1;
 	if (env->mouse.x)
 	{
-		env->zoom -= (env->zoom / 10) * speed;
-		env->x -= (env->x + env->width / 2) / 10;
-		env->y -= (env->y + env->height / 2) / 10;
-		env->x -= ((env->mouse.x - env->width / 2) / 10);
-		env->y -= ((env->mouse.y - env->height / 2) / 10);
-		//fract(env, env->opt[env->op]);
+		env->zoom -= (env->zoom / 5) * speed;
+		env->x -= (env->x + env->width / 2) / 5;
+		env->y -= (env->y + env->height / 2) / 5;
+		env->x -= ((env->mouse.x - env->width / 2) / 5);
+		env->y -= ((env->mouse.y - env->height / 2) / 5);
 	}
 	else
 	{
@@ -122,5 +115,5 @@ void			dezoom(t_fractenv *env)
 		env->zoom /= 2;
 	}
 	if (env->verbose)
-	ft_printf("zoom: %d\n", env->zoom);
+		ft_printf("zoom: %d\n", env->zoom);
 }
