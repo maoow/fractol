@@ -14,30 +14,19 @@
 
 void	increasepixel(t_fractenv *env, t_pixel pixel, unsigned int color)
 {
+	size_t place;
 	pixel.y *= env->zoom;
-	pixel.y -= env->x;// / 2;
 	pixel.x *= env->zoom;
-	pixel.x -= env->y;// / 2;
-	color *= (0xf0 / sqrt(env->it_max)) + 1;
-	if (color == 0)
-		color++;
-	if (pixel.y < env->width && pixel.x < env->height && pixel.y >= 0 &&
-			pixel.x >= 0)
-	{
-		if (env->imgstr[(int)pixel.y + (int)pixel.x * env->width] + color < 0x1000000)
-			env->imgstr[(int)pixel.y + (int)pixel.x * env->width] +=
-				(unsigned int)color;
-		//else
-			//env->imgstr[(int)pixel.y + (int)pixel.x * env->width] =
-				//(env->imgstr[(int)pixel.y + (int)pixel.x * env->width] + color) / 0x1000000;
-	}
+	pixel.y -= env->x;
+	pixel.x -= env->y;
+	place = (size_t)pixel.y + (size_t)pixel.x * env->width;
+	if (place <= env->width * env->height)
+		env->imgstr[place] += (unsigned int)color;
 }
 
 void	addpixel(t_fractenv *env, t_pixel pixel, int color)
 {
-	//if (color >= env->i * 0x100)
-	//color = env->i * 0xff;
-color *= 0xff + env->zoom / 0xff;
-color /= env->it_max;// / env->zoom );
+	color *= 0xff;
+	color /= env->it_max;
 	env->imgstr[(int)pixel.x + (int)pixel.y * env->width] = (unsigned int)color;
 }
