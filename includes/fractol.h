@@ -134,3 +134,11 @@ void	addpixel(t_fractenv *env, t_pixel pixel, int color);
 void	rbuddha(t_fractenv *env, t_pixel pixel);
 void	rdjulia(t_fractenv *env, t_pixel pixel);
 void	djulia(t_fractenv *env, t_pixel pixel);
+
+
+t_pixel	ju_op(t_pixel *a, t_pixel b);
+bool	is_rbounded(t_fractenv *env, t_pixel a);
+bool	is_bounded(t_fractenv *env, t_pixel a);
+t_pixel	tju_op(t_pixel *a, t_pixel b);
+t_pixel	dju_op(t_pixel *a, t_pixel b);
+unsigned int get_color(t_fractenv *env, size_t i);

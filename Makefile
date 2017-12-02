@@ -13,15 +13,16 @@
 NAME = fractol
 
 MLX=mlx
+MLX=minilibx
 CC = gcc
-LFLAGS = -framework OpenGL -framework AppKit -lmlx #-lXext -lX11
-CFLAGS = -IGL -IGLUT -lXext -lX11 -lm
-DEBUG =
+CFLAGS = -framework OpenGL -framework AppKit -lmlx #-lXext -lX11
+LFLAGS = -IGL -IGLUT -lXext -lX11 -lm
+DEBUG = -ofast -o2 -flto
 DEBUG2 = -g -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer
 CPPFLAGS = -iquote includes/$(MLX) -iquote includes -iquote $(LIB_PATH)$(INC)
 
 SRC_PATH = srcs/
-SRC_NAME = fractol.c events.c move.c fractales.c draw.c
+SRC_NAME = fractol.c events.c move.c fractales.c draw.c series.c julia.c buddha.c mand.c
 
 OBJ_PATH = obj/
 OBJ_NAME = $(SRC_NAME:.c=.o)
