@@ -12,9 +12,11 @@ void	mand(t_fractenv *env, t_pixel pixel)
 	i = 0;
 	while (++i < env->it_max && (is_bounded(env, z) || i == 0))
 		ju_op(&z, p);
-	if (env->colormode % 2 == 0)
+	if (i != env->it_max)
+	{
 		i *= get_color(env,i);
-	addpixel(env, pixel, i);
+		addpixel(env, pixel, i);
+	}
 }
 
 void	dmand(t_fractenv *env, t_pixel pixel)
@@ -29,6 +31,7 @@ void	dmand(t_fractenv *env, t_pixel pixel)
 	i = 0;
 	while (++i < env->it_max && (is_bounded(env, z) || i == 0))
 		dju_op(&z, p);
+	i *= get_color(env,i);
 	addpixel(env, pixel, i);
 }
 
@@ -46,5 +49,6 @@ void	tmand(t_fractenv *env, t_pixel pixel)
 	i = 0;
 	while (++i < env->it_max && (is_bounded(env, z) || i == 0))
 		tju_op(&z, p);
+	i *= get_color(env,i);
 	addpixel(env, pixel, i);
 }

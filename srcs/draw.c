@@ -73,11 +73,11 @@ unsigned int get_color(t_fractenv *env, size_t i)
 {
 	unsigned int color;
 
-	if (env->colormode == 0)
+	if (env->colormode <= 1)
 	{
 		return (env->color);
 	}
-	else if (env->colormode <= 2)
+	else if (env->colormode <= 3)
 	{
 		if (i % 3 == 0)
 			color= env->color;
@@ -131,25 +131,20 @@ void	increasepixel(t_fractenv *env, t_pixel pixel, unsigned int color)
 	pixel.x -= env->y;
 	place = (size_t)pixel.y + (size_t)pixel.x * env->width;
 	if (place <= env->width * env->height)
+{
+if ((int)env->imgstr[place] + (int)color < 0x1000000)
 		env->imgstr[place] += (unsigned int)color;
+}
 }
 
 void	addpixel(t_fractenv *env, t_pixel pixel, int color)
 {
-	if (env->colormode == 0)
-		color = (color * 0xffffff) / env->it_max;
-	else if (env->colormode <= 2)
-		color = (color);
-	else if (env->colormode <= 4)
-		color = (env->color * color);
-	else if (color != env->it_max)
-	{
-		color *= 0xff;
-		color /= (int)env->it_max;
-		color %= 0xff;
-		color *= env->color;
-	}
-	else
-		color = env->color * 0xff;
+	if (env->colormode % 2 == 0)
+{
+		color = color / ((env->it_max % (color * 0x100)) );
+color *= env->color;
+}
+else
+		color = color * ((env->it_max % 0x100) + 1);
 	env->imgstr[(int)pixel.x + (int)pixel.y * env->width] = (unsigned int)color;
 }

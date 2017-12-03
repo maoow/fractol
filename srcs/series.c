@@ -93,6 +93,18 @@ t_pixel	ju_op(t_pixel *a, t_pixel b)
 	a->y += (b.y);
 	return (*a);
 }
+t_pixel	mrju_op(t_pixel *a, t_pixel b, long double zoom)
+{
+a->x *= zoom;
+a->y *= zoom;
+	a->x = abs(a->x);
+a->x /= zoom;
+a->y /= zoom;
+	csquare(a);
+	a->x += (b.x);
+	a->y += (b.y);
+	return (*a);
+}
 t_pixel	rju_op(t_pixel *a, t_pixel b, long double zoom)
 {
 a->x *= zoom;

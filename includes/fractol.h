@@ -42,8 +42,8 @@ typedef struct	s_fractenv
 	int key;
 
 	size_t	op;
-	void	*opt[12];
-	char	*opc[12];
+	void	*opt[14];
+	char	*opc[14];
 	int end;
 	int sl;
 	int bpp;
@@ -136,11 +136,13 @@ void	addpixel(t_fractenv *env, t_pixel pixel, int color);
  #define K_SLASH 47
  #define K_SPACE 32
 void	rbuddha(t_fractenv *env, t_pixel pixel);
+void	bbuddha(t_fractenv *env, t_pixel pixel);
 void	tjulia(t_fractenv *env, t_pixel pixel);
 void	tmand(t_fractenv *env, t_pixel pixel);
 void	dmand(t_fractenv *env, t_pixel pixel);
 void	bship(t_fractenv *env, t_pixel pixel);
 void	djulia(t_fractenv *env, t_pixel pixel);
+void	rjulia(t_fractenv *env, t_pixel pixel);
 
 
 t_pixel	ju_op(t_pixel *a, t_pixel b);
@@ -150,4 +152,5 @@ bool	is_bounded(t_fractenv *env, t_pixel a);
 t_pixel	tju_op(t_pixel *a, t_pixel b);
 t_pixel	dju_op(t_pixel *a, t_pixel b);
 t_pixel	rju_op(t_pixel *a, t_pixel b, long double zoom);
+t_pixel	mrju_op(t_pixel *a, t_pixel b, long double zoom);
 unsigned int get_color(t_fractenv *env, size_t i);

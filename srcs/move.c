@@ -12,6 +12,10 @@
 
 #include "fractol.h"
 
+static bool isbub(size_t op)
+{
+return (op > 9 && op < 14);
+}
 void			colorup(t_fractenv *env)
 {
 if (env->color < 0x10000)
@@ -41,28 +45,28 @@ env->colormode = 0;
 
 void			up(t_fractenv *env)
 {
-if (env->op < 7 || env->op >= 10)
-	env->min = 0;
-	else
-		env->min = 0.12;
-	if (env->op < 11)
+	if (env->op < 13)
 		env->op++;
 	else
 		env->op = 0;
+if (isbub(env->op))
+		env->min = 0.12;
+	else
+	env->min = 0;
 	if (env->verbose)
 		ft_printf("fractale : %s\n", env->opc[env->op]);
 }
 
 void			down(t_fractenv *env)
 {
-if (env->op < 9 && env->op > 0)
-	env->min = -env->width / 2;
-	else
-	env->min = 0.12;
 	if (env->op > 0)
 		env->op--;
 	else
-		env->op = 10;
+		env->op = 13;
+if (isbub(env->op))
+		env->min = 0.12;
+	else
+	env->min = 0;
 	if (env->verbose)
 		ft_printf("fractale : %s\n", env->opc[env->op]);
 }

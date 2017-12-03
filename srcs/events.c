@@ -84,12 +84,18 @@ int			loopachieved(t_fractenv *env)
 {
 	return (0);
 }
+static bool		isju(size_t op)
+{
+return (
+	(op > 5 && op < 14)
+);
+}
 
 int			mousemove(int x, int y, t_fractenv *env)
 {
 	size_t		count;
 
-if (env->move && env->op != 0 && x >= 0 && y >= 0 && x <= env->width && y <= env->height)
+if (env->move && isju(env->op) && x >= 0 && y >= 0 && x <= env->width && y <= env->height)
 {
 	count = 0;
 	env->mouse2.x = x;

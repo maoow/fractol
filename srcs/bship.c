@@ -16,7 +16,7 @@ void	bship(t_fractenv *env, t_pixel pixel)
 	i = 0;
 	while (++i < env->it_max && (is_bounded(env, z) || i == 0))
 		rju_op(&z, p, env->zoom);
-	addpixel(env, pixel, get_color(env,i));
+	i *= get_color(env,i);
 	addpixel(env, pixel, i);
 }
 
