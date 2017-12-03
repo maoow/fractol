@@ -6,10 +6,11 @@
 #include "get_next_line.h"
 #include <time.h>
 #include <stdio.h>
-#define K_NB 10
+#define K_NB 11
 #define B_NB 5
 #define MN 6
 #define MM (1L<<6)
+#define NB_FRACT 13
 
 typedef struct	s_pixel
 {
@@ -17,6 +18,17 @@ typedef struct	s_pixel
 	long double	y;
 	int	color;
 }		t_pixel;
+typedef struct	s_fract
+{
+	char	*name;
+	t_pixel	(*serie)();
+	void	(*function)();
+	void		*img;
+	bool	mdep;
+	long double	min;
+	long double	max;
+	size_t		lastit;
+}		t_fract;
 
 typedef struct	s_fractenv
 {
@@ -42,6 +54,7 @@ typedef struct	s_fractenv
 	int key;
 
 	size_t	op;
+	t_fract fract[NB_FRACT];
 	void	*opt[14];
 	char	*opc[14];
 	int end;
@@ -76,7 +89,8 @@ void			dezoom(t_fractenv *env);
 void			mand(t_fractenv *env, t_pixel pixel);
 void			julia(t_fractenv *env, t_pixel pixel);
 void			buddha(t_fractenv *env, t_pixel pixel);
-void	fract(t_fractenv *env, void	(op(t_fractenv *, t_pixel)));
+void	fract(t_fractenv *env);// void	(op(t_fractenv *, t_pixel)));
+void	bfract(t_fractenv *env);// void	(op(t_fractenv *, t_pixel)));
 void	increasepixel(t_fractenv *env, t_pixel pixel, unsigned int color);
 void	addpixel(t_fractenv *env, t_pixel pixel, int color);
 
@@ -140,6 +154,7 @@ void	bbuddha(t_fractenv *env, t_pixel pixel);
 void	tjulia(t_fractenv *env, t_pixel pixel);
 void	tmand(t_fractenv *env, t_pixel pixel);
 void	dmand(t_fractenv *env, t_pixel pixel);
+void	tbship(t_fractenv *env, t_pixel pixel);
 void	bship(t_fractenv *env, t_pixel pixel);
 void	djulia(t_fractenv *env, t_pixel pixel);
 void	rjulia(t_fractenv *env, t_pixel pixel);
@@ -154,3 +169,6 @@ t_pixel	dju_op(t_pixel *a, t_pixel b);
 t_pixel	rju_op(t_pixel *a, t_pixel b, long double zoom);
 t_pixel	mrju_op(t_pixel *a, t_pixel b, long double zoom);
 unsigned int get_color(t_fractenv *env, size_t i);
+void	initbship(t_fractenv *env, t_fract *fract);
+		void printenv(t_fractenv *env);
+			void put_loading_logo(t_fractenv *env, int x);

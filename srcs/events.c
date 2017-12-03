@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 
-void		quit(t_fractenv *env)
+void		quit()
 {
 	exit(0);
 }
@@ -70,34 +70,18 @@ int			mloop(t_fractenv *env)
 	if (env->mod)
 	{
 		env->mod =false;
-		fract(env, env->opt[env->op]);
+		env->fract[env->op].function(env);
+		env->fract[env->op].lastit = env->it_max;
 	}
 	return (0);
 }
 
-int			loop(int key, int x, int y, t_fractenv *env)
-{
-	return (0);
-}
-
-int			loopachieved(t_fractenv *env)
-{
-	return (0);
-}
-static bool		isju(size_t op)
-{
-return (
-	(op > 5 && op < 14)
-);
-}
 
 int			mousemove(int x, int y, t_fractenv *env)
 {
-	size_t		count;
 
-if (env->move && isju(env->op) && x >= 0 && y >= 0 && x <= env->width && y <= env->height)
+if (env->move &&  x >= 0 && y >= 0 && x <= env->width && y <= env->height)
 {
-	count = 0;
 	env->mouse2.x = x;
 	env->mouse2.y = y;
 			env->mod = true;
@@ -111,6 +95,8 @@ int			buttonpressed(int key, int x, int y, t_fractenv *env)
 {
 	size_t		count;
 
+	env->mouse.x = x;
+	env->mouse.y = y;
 	count = 0;
 	env->key = key;
 	while (count < K_NB)
@@ -137,8 +123,8 @@ int			keypressed(int key, t_fractenv *env)
 		count++;
 	if (count < K_NB)
 	{
-		g_keyf[count](env);
 		env->mod = true;
+		g_keyf[count](env);
 	}
 	else
 		ft_printf("%d\n", key);

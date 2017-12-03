@@ -57,7 +57,7 @@ bool	is_bounded(t_fractenv *env, t_pixel a)
 	double tmp;
 	tmp = a.x * a.x + a.y * a.y;
 	return (
-			(tmp < env->max && tmp > env->min )
+			(tmp < env->fract[env->op].max && tmp > env->fract[env->op].min)
 	       );
 }
 

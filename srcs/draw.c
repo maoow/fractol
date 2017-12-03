@@ -21,7 +21,7 @@ void	put_loading_logo(t_fractenv *env, int x)
 	i = 0;
 	img = mlx_new_image(env->mlx, env->width , 1 );
 	imgstr = (unsigned int *)mlx_get_data_addr(img, &env->bpp, &env->sl, &env->end);
-	while (i < (env->width ) )
+	while (i < (size_t)env->width)
 	{
 		imgstr[i ] = 0x00ff00;
 		i++;
@@ -62,7 +62,7 @@ void	printenv(t_fractenv *env)
 	mlx_string_put(env->mlx, env->win, 10, 55,0x00FF00, "imax :");
 	mlx_string_put(env->mlx, env->win, 50, 55,0x00FF00, ft_itoa(env->it_max));
 	mlx_string_put(env->mlx, env->win, 10, 75,0x00FF00, "frac :");
-	mlx_string_put(env->mlx, env->win, 50, 75,0x00FF00, env->opc[env->op]);
+	mlx_string_put(env->mlx, env->win, 50, 75,0x00FF00, env->fract[env->op].name);
 	mlx_string_put(env->mlx, env->win, 10, 95,0x00FF00, "col  :");
 	mlx_string_put(env->mlx, env->win, 50, 95,0x00FF * env->color, ft_itoa(env->colormode));
 	//mlx_string_put(env->mlx, env->win, 10, 80,0x00FF00, " \x01 \x02 \x03 \x10 \x11 \x1b");
@@ -130,7 +130,7 @@ void	increasepixel(t_fractenv *env, t_pixel pixel, unsigned int color)
 	pixel.y -= env->x;
 	pixel.x -= env->y;
 	place = (size_t)pixel.y + (size_t)pixel.x * env->width;
-	if (place <= env->width * env->height)
+	if (place <= (size_t)env->width * env->height)
 {
 if ((int)env->imgstr[place] + (int)color < 0x1000000)
 		env->imgstr[place] += (unsigned int)color;

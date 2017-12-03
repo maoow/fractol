@@ -12,14 +12,8 @@
 
 #include "fractol.h"
 
-void	init(t_fractenv *env)
+void	initfract(t_fractenv *env)
 {
-	int fd;
-
-	env->mlx = mlx_init();
-	env->move = false;
-	env->width = 1350;
-	env->height = 750;
 	env->zoom = env->width / 8;
 	env->mouse.x = 0;
 	env->mouse.y = 0;
@@ -31,39 +25,59 @@ void	init(t_fractenv *env)
 	env->max = env->height ;// 2;
 	env->min = 0;
 	env->max = 4.5;
-	env->win = mlx_new_window(env->mlx, env->width, env->height, "fract");
-	env->op = 0;
-	env->opt[0] = &mand;
-	env->opc[0] = ft_strdup("mand");
-	env->opt[1] = &bship;
-	env->opc[1] = ft_strdup("bship");
-	env->opt[2] = &dmand;
-	env->opc[2] = ft_strdup("dmand");
-	env->opt[3] = &tmand;
-	env->opc[3] = ft_strdup("tmand");
-	env->opt[4] = &buddha;
-	env->opc[4] = ft_strdup("buddha");
-	env->opt[5] = &rbuddha;
-	env->opc[5] = ft_strdup("rbuddha");
-	env->opt[6] = &julia;
-	env->opc[6] = ft_strdup("julia");
-	env->opt[7] = &djulia;
-	env->opc[7] = ft_strdup("djulia");
-	env->opt[8] = &rjulia;
-	env->opc[8] = ft_strdup("absju");
-	env->opt[9] = &tjulia;
-	env->opc[9] = ft_strdup("tjulia");
-	env->opt[10] = &julia;
-	env->opc[10] = ft_strdup("bubble");
-	env->opt[11] = &djulia;
-	env->opc[11] = ft_strdup("dbubble");
-	env->opt[12] = &tjulia;
-	env->opc[12] = ft_strdup("tbubble");
-	env->opt[13] = &rjulia;
-	env->opc[13] = ft_strdup("absbub");
 	env->it_max = 10;
 	env->color = 0x000100;
 	env->colormode = 0;
+}
+t_fract	initfractale(char *name, t_pixel (*serie)(), void (*ffract)(), t_pixel lim, bool mdep)
+{
+t_fract fract;
+	fract.name = ft_strdup(name);
+	fract.serie = serie;
+	fract.function = ffract;
+	fract.min = lim.x;
+	fract.max = lim.y;
+	fract.mdep = mdep;
+	fract.img = NULL;
+	fract.lastit = 0;
+return (fract);
+}
+
+void	init(t_fractenv *env)
+{
+t_pixel	reglim;
+t_pixel	bublim;
+
+reglim.x = 0;
+reglim.y = 4.5;
+
+bublim.x = 0.015;
+bublim.y = 4.5;
+	env->mlx = mlx_init();
+	env->move = false;
+	env->width = 1350;
+	env->height = 750;
+	env->win = mlx_new_window(env->mlx, env->width, env->height, "fract");
+
+env->fract[1] = initfractale("bship", &rju_op, &fract, reglim, false);
+env->fract[0] = initfractale("mand", &ju_op, &fract, reglim, false);
+env->fract[2] = initfractale("dmand", &dju_op, &fract, reglim, false);
+env->fract[3] = initfractale("tmand", &tju_op, &fract, reglim, false);
+env->fract[4] = initfractale("ju", &ju_op, &fract, reglim, true);
+env->fract[5] = initfractale("dju", &dju_op, &fract, reglim, true);
+env->fract[6] = initfractale("tju", &tju_op, &fract, reglim, true);
+env->fract[7] = initfractale("absju", &mrju_op, &fract, reglim, true);
+env->fract[8] = initfractale("buble", &ju_op, &fract, bublim, true);
+env->fract[9] = initfractale("dbuble", &dju_op, &fract, bublim, true);
+env->fract[10] = initfractale("tbuble", &tju_op, &fract, bublim, true);
+env->fract[11] = initfractale("absbuble", &mrju_op, &fract, bublim, true);
+env->fract[12] = initfractale("buddha", &ju_op, &bfract, reglim, false);
+//initmand(env, &(env->fract[1]));
+//initdmand(env, &(env->fract[2]));
+	env->op = 0;
+
+initfract(env);
+
 	env->mod = true;
 	env->verbose = true;
 }

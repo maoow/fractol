@@ -12,10 +12,6 @@
 
 #include "fractol.h"
 
-static bool isbub(size_t op)
-{
-return (op > 9 && op < 14);
-}
 void			colorup(t_fractenv *env)
 {
 if (env->color < 0x10000)
@@ -45,16 +41,18 @@ env->colormode = 0;
 
 void			up(t_fractenv *env)
 {
-	if (env->op < 13)
 		env->op++;
-	else
+	if (env->op >= NB_FRACT)
 		env->op = 0;
-if (isbub(env->op))
-		env->min = 0.12;
-	else
-	env->min = 0;
 	if (env->verbose)
-		ft_printf("fractale : %s\n", env->opc[env->op]);
+		ft_printf("fractale : %s\n", env->fract[env->op].name);
+	if (env->fract[env->op].img)
+{
+		mlx_put_image_to_window(env->mlx, env->win, env->fract[env->op].img, 0, 0);
+printenv(env);
+if (env->fract[env->op].lastit == env->it_max)
+	env->mod = false;
+}
 }
 
 void			down(t_fractenv *env)
@@ -62,13 +60,16 @@ void			down(t_fractenv *env)
 	if (env->op > 0)
 		env->op--;
 	else
-		env->op = 13;
-if (isbub(env->op))
-		env->min = 0.12;
-	else
-	env->min = 0;
+		env->op = NB_FRACT - 1;
 	if (env->verbose)
-		ft_printf("fractale : %s\n", env->opc[env->op]);
+		ft_printf("fractale : %s\n", env->fract[env->op].name);
+	if (env->fract[env->op].img)
+{
+		mlx_put_image_to_window(env->mlx, env->win, env->fract[env->op].img, 0, 0);
+printenv(env);
+if (env->fract[env->op].lastit == env->it_max)
+	env->mod = false;
+}
 }
 
 void			right(t_fractenv *env)
