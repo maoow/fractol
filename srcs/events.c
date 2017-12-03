@@ -80,7 +80,7 @@ int			mloop(t_fractenv *env)
 int			mousemove(int x, int y, t_fractenv *env)
 {
 
-if (env->move &&  x >= 0 && y >= 0 && x <= env->width && y <= env->height)
+if (env->move && env->fract[env->op].mdep && x >= 0 && y >= 0 && x <= env->width && y <= env->height)
 {
 	env->mouse2.x = x;
 	env->mouse2.y = y;

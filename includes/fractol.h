@@ -6,6 +6,7 @@
 #include "get_next_line.h"
 #include <time.h>
 #include <stdio.h>
+#include <math.h>
 #define K_NB 11
 #define B_NB 5
 #define MN 6

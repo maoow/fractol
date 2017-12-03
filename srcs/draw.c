@@ -48,7 +48,7 @@ void	printenv(t_fractenv *env)
 	i = 0;
 	img = mlx_new_image(env->mlx, 90 , 80 );
 	imgstr = (unsigned int *)mlx_get_data_addr(img, &env->bpp, &env->sl, &env->end);
-	while (i < (7200 ) )
+	while (i < (7200 ))
 	{
 		if (i % 90 == 0 || i % 90 == 89 || (i / 90) % 80 == 0 || (i / 90) % 80== 79)
 			imgstr[i] = 0x008888;
@@ -58,14 +58,12 @@ void	printenv(t_fractenv *env)
 	}
 	mlx_put_image_to_window(env->mlx, env->win, img, 3, 22);
 	mlx_destroy_image(env->mlx, img);
-
 	mlx_string_put(env->mlx, env->win, 10, 55,0x00FF00, "imax :");
 	mlx_string_put(env->mlx, env->win, 50, 55,0x00FF00, ft_itoa(env->it_max));
 	mlx_string_put(env->mlx, env->win, 10, 75,0x00FF00, "frac :");
 	mlx_string_put(env->mlx, env->win, 50, 75,0x00FF00, env->fract[env->op].name);
 	mlx_string_put(env->mlx, env->win, 10, 95,0x00FF00, "col  :");
 	mlx_string_put(env->mlx, env->win, 50, 95,0x00FF * env->color, ft_itoa(env->colormode));
-	//mlx_string_put(env->mlx, env->win, 10, 80,0x00FF00, " \x01 \x02 \x03 \x10 \x11 \x1b");
 	mlx_string_put(env->mlx, env->win, 10, 35,0x00FF00, "time :");
 }
 
@@ -74,9 +72,7 @@ unsigned int get_color(t_fractenv *env, size_t i)
 	unsigned int color;
 
 	if (env->colormode <= 1)
-	{
 		return (env->color);
-	}
 	else if (env->colormode <= 3)
 	{
 		if (i % 3 == 0)
@@ -131,20 +127,20 @@ void	increasepixel(t_fractenv *env, t_pixel pixel, unsigned int color)
 	pixel.x -= env->y;
 	place = (size_t)pixel.y + (size_t)pixel.x * env->width;
 	if (place <= (size_t)env->width * env->height)
-{
-if ((int)env->imgstr[place] + (int)color < 0x1000000)
-		env->imgstr[place] += (unsigned int)color;
-}
+	{
+		if ((int)env->imgstr[place] + (int)color < 0x1000000)
+			env->imgstr[place] += (unsigned int)color;
+	}
 }
 
 void	addpixel(t_fractenv *env, t_pixel pixel, int color)
 {
 	if (env->colormode % 2 == 0)
-{
+	{
 		color = color / ((env->it_max % (color * 0x100)) );
-color *= env->color;
-}
-else
+		color *= env->color;
+	}
+	else
 		color = color * ((env->it_max % 0x100) + 1);
 	env->imgstr[(int)pixel.x + (int)pixel.y * env->width] = (unsigned int)color;
 }

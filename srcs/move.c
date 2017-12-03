@@ -50,7 +50,7 @@ void			up(t_fractenv *env)
 {
 		mlx_put_image_to_window(env->mlx, env->win, env->fract[env->op].img, 0, 0);
 printenv(env);
-if (env->fract[env->op].lastit == env->it_max)
+if (env->fract[env->op].lastit >= env->it_max)
 	env->mod = false;
 }
 }
@@ -67,7 +67,7 @@ void			down(t_fractenv *env)
 {
 		mlx_put_image_to_window(env->mlx, env->win, env->fract[env->op].img, 0, 0);
 printenv(env);
-if (env->fract[env->op].lastit == env->it_max)
+if (env->fract[env->op].lastit >= env->it_max)
 	env->mod = false;
 }
 }
