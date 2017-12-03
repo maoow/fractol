@@ -38,6 +38,7 @@ void		(*g_buttonf[B_NB])() =
 int			g_key[K_NB] =
 {
 	K_Q,
+	K_V,
 	K_H,
 	K_K,
 	K_J,
@@ -52,6 +53,7 @@ int			g_key[K_NB] =
 void		(*g_keyf[K_NB])() =
 {
 	&quit,
+	&verbose,
 	&left,
 	&down,
 	&up,

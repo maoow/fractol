@@ -6,13 +6,15 @@ void	mand(t_fractenv *env, t_pixel pixel)
 	t_pixel	z;
 	t_pixel	p;
 
-	p.x = (((pixel.x + env->x) / env->zoom));
-	p.y = (((pixel.y + env->y) / env->zoom));
+	p.x = (pixel.x + env->x) / env->zoom;
+	p.y = (pixel.y + env->y) / env->zoom;
 	z = p;
 	i = 0;
 	while (++i < env->it_max && (is_bounded(env, z) || i == 0))
 		ju_op(&z, p);
-		addpixel(env, pixel, i);
+	if (env->colormode % 2 == 0)
+		i *= get_color(env,i);
+	addpixel(env, pixel, i);
 }
 
 void	dmand(t_fractenv *env, t_pixel pixel)

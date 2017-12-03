@@ -45,5 +45,5 @@ void	julia(t_fractenv *env, t_pixel pixel)
 	i = 0;
 	while (++i < env->it_max && (is_bounded(env, z) || i == 0))
 		ju_op(&z, p);
-	addpixel(env, pixel, i);
+		addpixel(env, pixel, i);
 }

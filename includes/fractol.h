@@ -37,12 +37,13 @@ typedef struct	s_fractenv
 	unsigned int	*imgstr2;
 	t_pixel	mouse;
 	t_pixel	mouse2;
-	size_t	i;
+	size_t	color;
+	unsigned char	colormode;
 	int key;
 
 	size_t	op;
-	void	*opt[11];
-	char	*opc[11];
+	void	*opt[12];
+	char	*opc[12];
 	int end;
 	int sl;
 	int bpp;
@@ -66,6 +67,7 @@ void			left(t_fractenv *env);
 void			up(t_fractenv *env);
 void			down(t_fractenv *env);
 void			right(t_fractenv *env);
+void			verbose(t_fractenv *env);
 void			higher(t_fractenv *env);
 void			lower(t_fractenv *env);
 void			colorup(t_fractenv *env);
@@ -137,12 +139,15 @@ void	rbuddha(t_fractenv *env, t_pixel pixel);
 void	tjulia(t_fractenv *env, t_pixel pixel);
 void	tmand(t_fractenv *env, t_pixel pixel);
 void	dmand(t_fractenv *env, t_pixel pixel);
+void	bship(t_fractenv *env, t_pixel pixel);
 void	djulia(t_fractenv *env, t_pixel pixel);
 
 
 t_pixel	ju_op(t_pixel *a, t_pixel b);
 bool	is_rbounded(t_fractenv *env, t_pixel a);
+bool	is_sbounded(t_fractenv *env, t_pixel a);
 bool	is_bounded(t_fractenv *env, t_pixel a);
 t_pixel	tju_op(t_pixel *a, t_pixel b);
 t_pixel	dju_op(t_pixel *a, t_pixel b);
+t_pixel	rju_op(t_pixel *a, t_pixel b, long double zoom);
 unsigned int get_color(t_fractenv *env, size_t i);

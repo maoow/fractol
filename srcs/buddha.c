@@ -4,11 +4,11 @@ void	buddhadraw(t_fractenv *env, size_t i)
 {
 	unsigned int color;
 
-	if (!env->move)
+	if (env->colormode % 2 == 1)
 		color = get_color(env, i);
 	while (--i > 0)
 	{
-		if (env->move)
+		if (env->colormode % 2 == 0)
 			color = get_color(env, i);
 		increasepixel(env, env->imap[i], color);
 	}
@@ -42,6 +42,6 @@ void	rbuddha(t_fractenv *env, t_pixel pixel)
 	z = p;
 	while (++i < env->it_max && (is_bounded(env, z) || i == 0))
 		env->imap[i] = ju_op(&z, p);
-	if (i == env->it_max)
+ if (i == env->it_max)
 		buddhadraw(env, i);
 }

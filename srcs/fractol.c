@@ -32,7 +32,7 @@ void	init(t_fractenv *env)
 	env->min = 0;
 	env->max = 4.5;
 	env->win = mlx_new_window(env->mlx, env->width, env->height, "fract");
-	env->op = 0;
+	env->op = 3;
 	env->opt[0] = &mand;
 	env->opc[0] = ft_strdup("mand");
 	env->opt[1] = &dmand;
@@ -55,8 +55,11 @@ void	init(t_fractenv *env)
 	env->opc[9] = ft_strdup("dbubble");
 	env->opt[10] = &tjulia;
 	env->opc[10] = ft_strdup("tbubble");
+	env->opt[11] = &bship;
+	env->opc[11] = ft_strdup("bship");
 	env->it_max = 50;
-	env->i = 0x000001;
+	env->color = 0x000100;
+	env->colormode = 5;
 	env->mod = true;
 	env->verbose = true;
 }
