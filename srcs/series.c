@@ -47,7 +47,7 @@ bool	is_sbounded(t_fractenv *env, t_pixel a)
 {
 	double tmp;
 	tmp = a.x * a.x + a.y * a.y;
-	tmp = abs(a.x * a.x) + abs(a.y * a.y);
+	tmp = fabsl(a.x * a.x) + fabsl(a.y * a.y);
 	return (
 			(tmp < env->max && tmp > env->min )
 	       );
@@ -97,7 +97,7 @@ t_pixel	mrju_op(t_pixel *a, t_pixel b, long double zoom)
 {
 a->x *= zoom;
 a->y *= zoom;
-	a->x = abs(a->x);
+	a->x = fabsl(a->x);
 a->x /= zoom;
 a->y /= zoom;
 	csquare(a);
@@ -109,8 +109,8 @@ t_pixel	rju_op(t_pixel *a, t_pixel b, long double zoom)
 {
 a->x *= zoom;
 a->y *= zoom;
-	a->x = abs(a->x);
-	a->y = abs(a->y);
+	a->x = fabsl(a->x);
+	a->y = fabsl(a->y);
 a->x /= zoom;
 a->y /= zoom;
 	csquare(a);

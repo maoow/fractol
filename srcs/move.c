@@ -6,7 +6,7 @@
 /*   By: cbinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 14:36:52 by cbinet            #+#    #+#             */
-/*   Updated: 2017/11/30 13:42:09 by cbinet           ###   ########.fr       */
+/*   Updated: 2017/12/04 11:04:58 by cbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ void			move(t_fractenv *env)
 
 void			left(t_fractenv *env)
 {
-	//env->min += .002;
-//printf("%f\n",(double)env->min);
 env->colormode++;
 if (env->colormode > 5)
 env->colormode = 0;
@@ -49,6 +47,7 @@ void			up(t_fractenv *env)
 	if (env->fract[env->op].img)
 {
 		mlx_put_image_to_window(env->mlx, env->win, env->fract[env->op].img, 0, 0);
+	if (env->verbose)
 printenv(env);
 if (env->fract[env->op].lastit >= env->it_max)
 	env->mod = false;
@@ -66,6 +65,7 @@ void			down(t_fractenv *env)
 	if (env->fract[env->op].img)
 {
 		mlx_put_image_to_window(env->mlx, env->win, env->fract[env->op].img, 0, 0);
+	if (env->verbose)
 printenv(env);
 if (env->fract[env->op].lastit >= env->it_max)
 	env->mod = false;

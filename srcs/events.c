@@ -6,7 +6,7 @@
 /*   By: cbinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 14:40:01 by cbinet            #+#    #+#             */
-/*   Updated: 2017/11/30 13:38:14 by cbinet           ###   ########.fr       */
+/*   Updated: 2017/12/04 10:50:46 by cbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ int			buttonpressed(int key, int x, int y, t_fractenv *env)
 	env->mouse.y = y;
 	count = 0;
 	env->key = key;
-	while (count < K_NB)
+	//ft_printf("%d\n", key);
+	while (count < B_NB)
 	{
 		if (key == g_button[count])
 		{
@@ -126,8 +127,8 @@ int			keypressed(int key, t_fractenv *env)
 		env->mod = true;
 		g_keyf[count](env);
 	}
-	else
-		ft_printf("%d\n", key);
+	//else
+		//ft_printf("%d\n", key);
 }
 	return (0);
 }

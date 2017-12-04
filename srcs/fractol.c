@@ -6,7 +6,7 @@
 /*   By: cbinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 14:43:11 by cbinet            #+#    #+#             */
-/*   Updated: 2017/11/30 18:42:14 by cbinet           ###   ########.fr       */
+/*   Updated: 2017/12/04 11:04:40 by cbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,12 @@ void	initfract(t_fractenv *env)
 	env->y = -(env->height) / 2;
 	env->min = -env->height ;// 2;
 	env->max = env->height ;// 2;
-	env->it_max = 50;
+	env->it_max = 10;
 	env->color = 0x000100;
 	env->colormode = 0;
-	env->fract[1] = initfractale("bship", &rju_op, &fract, reglim, false);
+	env->op = 0;
 	env->fract[0] = initfractale("mand", &ju_op, &fract, reglim, false);
+	env->fract[1] = initfractale("bship", &rju_op, &fract, reglim, false);
 	env->fract[2] = initfractale("dmand", &dju_op, &fract, reglim, false);
 	env->fract[3] = initfractale("tmand", &tju_op, &fract, reglim, false);
 	env->fract[4] = initfractale("ju", &ju_op, &fract, reglim, true);
@@ -66,17 +67,16 @@ void	init(t_fractenv *env)
 
 	env->mlx = mlx_init();
 	env->move = false;
-	env->width = 1350;
-	env->height = 750;
+	env->width = 2400;
+	env->height = 1300;
 	env->win = mlx_new_window(env->mlx, env->width, env->height, "fract");
 	//initmand(env, &(env->fract[1]));
 	//initdmand(env, &(env->fract[2]));
-	env->op = 0;
 
 	initfract(env);
 
 	env->mod = true;
-	env->verbose = true;
+	env->verbose = false;
 }
 
 int		main(void)

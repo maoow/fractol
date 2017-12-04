@@ -6,7 +6,7 @@
 /*   By: cbinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 14:17:10 by cbinet            #+#    #+#             */
-/*   Updated: 2017/11/30 18:46:09 by cbinet           ###   ########.fr       */
+/*   Updated: 2017/12/04 13:24:45 by cbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	put_loading_logo(t_fractenv *env, int x)
 	mlx_put_image_to_window(env->mlx, env->win, img, 0, 2);
 	mlx_string_put(env->mlx, env->win,x / 2 + env->width / 2 , 14,0x008833, "\x2");
 	mlx_string_put(env->mlx, env->win,(-x / 2) + env->width / 2 , 14,0x008833, "\x2");
-	mlx_string_put(env->mlx, env->win, env->width / 2 - 5, 14,0xff, "\x2\x2\x2\x2");
-	mlx_string_put(env->mlx, env->win, env->width / 2 - 6, 14,0xff, "\x2\x2\x2\x2");
+	mlx_string_put(env->mlx, env->win, env->width / 2 - 5, 14,0xff, "#");
+	mlx_string_put(env->mlx, env->win, env->width / 2 - 6, 14,0xff, "#");
 	mlx_string_put(env->mlx, env->win, env->width / 2 , 14,0x00, ft_itoa((x * 100) / env->width));
 	mlx_string_put(env->mlx, env->win, env->width / 2 + 12, 14,0x00, 
 			"%");
