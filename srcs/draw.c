@@ -59,36 +59,37 @@ void	printenv(t_fractenv *env)
 	mlx_put_image_to_window(env->mlx, env->win, img, 3, 22);
 	mlx_destroy_image(env->mlx, img);
 	mlx_string_put(env->mlx, env->win, 10, 55,0x00FF00, "imax :");
-	mlx_string_put(env->mlx, env->win, 50, 55,0x00FF00, ft_itoa(env->it_max));
+	mlx_string_put(env->mlx, env->win, 50, 55,0x00FF00, ft_itoa(env->fract[env->op].it_max));
 	mlx_string_put(env->mlx, env->win, 10, 75,0x00FF00, "frac :");
 	mlx_string_put(env->mlx, env->win, 50, 75,0x00FF00, env->fract[env->op].name);
 	mlx_string_put(env->mlx, env->win, 10, 95,0x00FF00, "col  :");
-	mlx_string_put(env->mlx, env->win, 50, 95,0x00FF * env->color, ft_itoa(env->colormode));
+	mlx_string_put(env->mlx, env->win, 50, 95,0x00FF * env->fract[env->op].color,
+			ft_itoa(env->fract[env->op].colormode));
 	mlx_string_put(env->mlx, env->win, 10, 35,0x00FF00, "time :");
 }
 
-unsigned int get_color(t_fractenv *env, size_t i)
+unsigned int get_color(t_fract fract, size_t i)
 {
 	unsigned int color;
 
-	if (env->colormode <= 1)
-		return (env->color);
-	else if (env->colormode <= 3)
+	if (fract.colormode <= 1)
+		return (fract.color);
+	else if (fract.colormode <= 3)
 	{
 		if (i % 3 == 0)
-			color= env->color;
+			color= fract.color;
 		else if (i % 3 == 1)
 		{
-			if (env->color > 0x1)
-				color = env->color / 0x100;
+			if (fract.color > 0x1)
+				color = fract.color / 0x100;
 			else
 				color =0x10000;
 			color= 0x010101 - color;
 		}
 		else
 		{
-			if (env->color < 0x10000)
-				color = env->color * 0x100;
+			if (fract.color < 0x10000)
+				color = fract.color * 0x100;
 			else
 				color =0x1;
 			color= 0x010101 - color;
@@ -96,20 +97,20 @@ unsigned int get_color(t_fractenv *env, size_t i)
 	}
 	else
 	{
-		if (i < 3 * env->it_max / 100)
-			color= env->color;
-		else if (i < 3 * env->it_max / 10)
+		if (i < 3 * fract.it_max / 100)
+			color= fract.color;
+		else if (i < 3 * fract.it_max / 10)
 		{
-			if (env->color > 0x1)
-				color = env->color / 0x100;
+			if (fract.color > 0x1)
+				color = fract.color / 0x100;
 			else
 				color =0x10000;
 			color= 0x010101 - color;
 		}
 		else
 		{
-			if (env->color < 0x10000)
-				color = env->color * 0x100;
+			if (fract.color < 0x10000)
+				color = fract.color * 0x100;
 			else
 				color =0x1;
 			color= 0x010101 - color;
@@ -121,26 +122,25 @@ unsigned int get_color(t_fractenv *env, size_t i)
 void	increasepixel(t_fractenv *env, t_pixel pixel, unsigned int color)
 {
 	size_t place;
-	pixel.y *= env->zoom;
-	pixel.x *= env->zoom;
-	pixel.y -= env->x;
-	pixel.x -= env->y;
+	pixel.y *= env->fract[env->op].zoom;
+	pixel.x *= env->fract[env->op].zoom;
+	pixel.y -= env->fract[env->op].x;
+	pixel.x -= env->fract[env->op].y;
 	place = (size_t)pixel.y + (size_t)pixel.x * env->width;
 	if (place <= (size_t)env->width * env->height)
 	{
-		if ((int)env->imgstr[place] + (int)color < 0x1000000)
+		if ((size_t)env->imgstr[place] + (size_t)color < 0x1000000)
 			env->imgstr[place] += (unsigned int)color;
 	}
 }
 
 void	addpixel(t_fractenv *env, t_pixel pixel, int color)
 {
-	if (env->colormode % 2 == 0)
+	if (env->fract[env->op].colormode % 2 == 1)
 	{
-		color = color / ((env->it_max % (color * 0x100)) );
-		color *= env->color;
+		color = 0xffffff ^ color;
+		color = 0x0f0f0f & color;
+		color *= 0x10 ;
 	}
-	else
-		color = color * ((env->it_max % 0x100) + 1);
 	env->imgstr[(int)pixel.x + (int)pixel.y * env->width] = (unsigned int)color;
 }

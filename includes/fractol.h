@@ -7,7 +7,7 @@
 #include <time.h>
 #include <stdio.h>
 #include <math.h>
-#define K_NB 11
+#define K_NB 12
 #define B_NB 5
 #define MN 6
 #define MM (1L<<6)
@@ -28,20 +28,23 @@ typedef struct	s_fract
 	bool	mdep;
 	long double	min;
 	long double	max;
+	size_t	it_max;
 	size_t		lastit;
+	long double	zoom;
+	size_t	color;
+	unsigned char	colormode;
+	long double	x;
+	long double	y;
+	t_pixel	mouse;
 }		t_fract;
 
 typedef struct	s_fractenv
 {
-	long double	min;
-	long double	max;
 	long double	size;
-	long double	zoom;
 	long double	x;
 	long double	y;
 	int	width;
 	int	height;
-	size_t	it_max;
 	void	*mlx;
 	void	*win;
 	void		*img;
@@ -49,15 +52,10 @@ typedef struct	s_fractenv
 	void		*img2;
 	unsigned int	*imgstr2;
 	t_pixel	mouse;
-	t_pixel	mouse2;
-	size_t	color;
-	unsigned char	colormode;
 	int key;
 
 	size_t	op;
 	t_fract fract[NB_FRACT];
-	void	*opt[14];
-	char	*opc[14];
 	int end;
 	int sl;
 	int bpp;
@@ -174,7 +172,10 @@ t_pixel	tju_op(t_pixel *a, t_pixel b);
 t_pixel	dju_op(t_pixel *a, t_pixel b);
 t_pixel	rju_op(t_pixel *a, t_pixel b, long double zoom);
 t_pixel	mrju_op(t_pixel *a, t_pixel b, long double zoom);
-unsigned int get_color(t_fractenv *env, size_t i);
+unsigned int get_color(t_fract fract, size_t i);
 void	initbship(t_fractenv *env, t_fract *fract);
 		void printenv(t_fractenv *env);
 			void put_loading_logo(t_fractenv *env, int x);
+void	initfract(t_fractenv *env);
+t_fract resetfract(t_fract fract);
+void			reset(t_fractenv *env);

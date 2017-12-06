@@ -22,36 +22,6 @@ void	casquare(t_pixel *z)
 	z->y = z->y * 2 * tmp;
 }
 
-void	ccube(t_pixel *z)
-{
-	long double	tmp;
-
-	tmp = z->x;
-	z->x = z->x * z->x - z->y * z->y;
-	z->y = z->y * 2 * tmp;
-	tmp = z->x;
-	z->x = z->x * z->x - z->y * z->y;
-	z->y = z->y * 2 * tmp;
-}
-
-bool	is_rbounded(t_fractenv *env, t_pixel a)
-{
-	double tmp;
-	tmp = a.x * a.y + a.x * a.y;
-	return (
-			(tmp < env->max && tmp > env->min )
-	       );
-}
-
-bool	is_sbounded(t_fractenv *env, t_pixel a)
-{
-	double tmp;
-	tmp = a.x * a.x + a.y * a.y;
-	tmp = fabsl(a.x * a.x) + fabsl(a.y * a.y);
-	return (
-			(tmp < env->max && tmp > env->min )
-	       );
-}
 bool	is_bounded(t_fractenv *env, t_pixel a)
 {
 	double tmp;
@@ -81,8 +51,6 @@ t_pixel	dju_op(t_pixel *a, t_pixel b)
 	csquare(a);
 	a->x += b.x;
 	a->y += b.y;
-	a->x += b.x;
-	a->y += b.y;
 	return (*a);
 }
 
@@ -107,12 +75,12 @@ a->y /= zoom;
 }
 t_pixel	rju_op(t_pixel *a, t_pixel b, long double zoom)
 {
-a->x *= zoom;
-a->y *= zoom;
+	a->x *= zoom;
+	a->y *= zoom;
 	a->x = fabsl(a->x);
 	a->y = fabsl(a->y);
-a->x /= zoom;
-a->y /= zoom;
+	a->x /= zoom;
+	a->y /= zoom;
 	csquare(a);
 	a->x += (b.x);
 	a->y += (b.y);

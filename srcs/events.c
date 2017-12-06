@@ -47,7 +47,8 @@ int			g_key[K_NB] =
 	K_D,
 	K_U,
 	K_M,
-	K_COMMA
+	K_COMMA,
+	K_I
 };
 
 void		(*g_keyf[K_NB])() =
@@ -62,7 +63,8 @@ void		(*g_keyf[K_NB])() =
 	&lower,
 	&colorup,
 	&zoom,
-	&dezoom
+	&dezoom,
+	&reset
 };
 
 int			mloop(t_fractenv *env)
@@ -71,8 +73,12 @@ int			mloop(t_fractenv *env)
 	{
 		env->mod =false;
 		env->fract[env->op].function(env);
-		env->fract[env->op].lastit = env->it_max;
 	}
+	//if (env->move && env->op == 12)
+	//{
+		//higher(env);
+		//env->mod = true;
+	//}
 	return (0);
 }
 
@@ -80,12 +86,14 @@ int			mloop(t_fractenv *env)
 int			mousemove(int x, int y, t_fractenv *env)
 {
 
-if (env->move && env->fract[env->op].mdep && x >= 0 && y >= 0 && x <= env->width && y <= env->height)
-{
-	env->mouse2.x = x;
-	env->mouse2.y = y;
-			env->mod = true;
-}
+	if (env->move && env->fract[env->op].mdep && x >= 0 && y >= 0 && x <= env->width && y <= env->height)
+	{
+		env->fract[env->op].mouse.x = (long double)(x - env->width / 2) / 300;
+		env->fract[env->op].mouse.y = (long double)(y - env->height / 2) / 300;
+		//env->fract[env->op].mouse.x = (x - env->width / 2) / env->fract[env->op].zoom;
+		//env->fract[env->op].mouse.y = (y - env->height / 2) / env->fract[env->op].zoom;
+		env->mod = true;
+	}
 	env->mouse.x = x;
 	env->mouse.y = y;
 	return (0);
@@ -116,19 +124,19 @@ int			keypressed(int key, t_fractenv *env)
 {
 	size_t		count;
 
-		if (!env->mod)
-{
-	count = 0;
-	env->key = key;
-	while (count < K_NB && key != g_key[count])
-		count++;
-	if (count < K_NB)
+	if (!env->mod)
 	{
-		env->mod = true;
-		g_keyf[count](env);
+		count = 0;
+		env->key = key;
+		while (count < K_NB && key != g_key[count])
+			count++;
+		if (count < K_NB)
+		{
+			env->mod = true;
+			g_keyf[count](env);
+		}
+		else
+			ft_printf("%d\n", key);
 	}
-	//else
-		//ft_printf("%d\n", key);
-}
 	return (0);
 }
