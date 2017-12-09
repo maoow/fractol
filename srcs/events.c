@@ -76,7 +76,6 @@ int			mloop(t_fractenv *env)
 	}
 	//if (env->move && env->op == 12)
 	//{
-		//higher(env);
 		//env->mod = true;
 	//}
 	return (0);
@@ -88,8 +87,8 @@ int			mousemove(int x, int y, t_fractenv *env)
 
 	if (env->move && env->fract[env->op].mdep && x >= 0 && y >= 0 && x <= env->width && y <= env->height)
 	{
-		env->fract[env->op].mouse.x = (long double)(x - env->width / 2) / 300;
-		env->fract[env->op].mouse.y = (long double)(y - env->height / 2) / 300;
+		env->fract[env->op].mouse.x = (double)(x - env->width / 2) / 300;
+		env->fract[env->op].mouse.y = (double)(y - env->height / 2) / 300;
 		//env->fract[env->op].mouse.x = (x - env->width / 2) / env->fract[env->op].zoom;
 		//env->fract[env->op].mouse.y = (y - env->height / 2) / env->fract[env->op].zoom;
 		env->mod = true;

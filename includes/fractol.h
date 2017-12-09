@@ -15,8 +15,8 @@
 
 typedef struct	s_pixel
 {
-	long double	x;
-	long double	y;
+	double	x;
+	double	y;
 	int	color;
 }		t_pixel;
 typedef struct	s_fract
@@ -26,25 +26,25 @@ typedef struct	s_fract
 	void	(*function)();
 	void		*img;
 	bool	mdep;
-	long double	min;
-	long double	max;
+	double	min;
+	double	max;
 	size_t	it_max;
 	size_t		lastit;
-	long double	zoom;
+	double	zoom;
 	size_t	color;
 	unsigned char	colormode;
-	long double	x;
-	long double	y;
+	double	x;
+	double	y;
 	t_pixel	mouse;
 }		t_fract;
 
 typedef struct	s_fractenv
 {
-	long double	size;
-	long double	x;
-	long double	y;
-	int	width;
-	int	height;
+	double	size;
+	double	x;
+	double	y;
+	double	width;
+	double	height;
 	void	*mlx;
 	void	*win;
 	void		*img;
@@ -170,12 +170,12 @@ bool	is_sbounded(t_fractenv *env, t_pixel a);
 bool	is_bounded(t_fractenv *env, t_pixel a);
 t_pixel	tju_op(t_pixel *a, t_pixel b);
 t_pixel	dju_op(t_pixel *a, t_pixel b);
-t_pixel	rju_op(t_pixel *a, t_pixel b, long double zoom);
-t_pixel	mrju_op(t_pixel *a, t_pixel b, long double zoom);
+t_pixel	rju_op(t_pixel *a, t_pixel b, double zoom);
+t_pixel	mrju_op(t_pixel *a, t_pixel b, double zoom);
 unsigned int get_color(t_fract fract, size_t i);
 void	initbship(t_fractenv *env, t_fract *fract);
 		void printenv(t_fractenv *env);
 			void put_loading_logo(t_fractenv *env, int x);
-void	initfract(t_fractenv *env);
+void	initfract(t_fractenv *env, t_pixel *lim, t_pixel *blim);
 t_fract resetfract(t_fract fract);
 void			reset(t_fractenv *env);

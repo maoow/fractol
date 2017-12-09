@@ -17,6 +17,7 @@ void	put_loading_logo(t_fractenv *env, int x)
 	void	*img;
 	unsigned int *imgstr;
 	size_t		i;
+	char		*tmp;
 
 	i = 0;
 	img = mlx_new_image(env->mlx, env->width , 1 );
@@ -28,12 +29,26 @@ void	put_loading_logo(t_fractenv *env, int x)
 	}
 	mlx_put_image_to_window(env->mlx, env->win, img, 0, 16);
 	mlx_put_image_to_window(env->mlx, env->win, img, 0, 2);
-	mlx_string_put(env->mlx, env->win,x / 2 + env->width / 2 , 14,0x008833, "\x2");
-	mlx_string_put(env->mlx, env->win,(-x / 2) + env->width / 2 , 14,0x008833, "\x2");
-	mlx_string_put(env->mlx, env->win, env->width / 2 - 5, 14,0xff, "#");
-	mlx_string_put(env->mlx, env->win, env->width / 2 - 6, 14,0xff, "#");
-	mlx_string_put(env->mlx, env->win, env->width / 2 , 14,0x00, ft_itoa((x * 100) / env->width));
-	mlx_string_put(env->mlx, env->win, env->width / 2 + 12, 14,0x00, 
+	mlx_string_put(env->mlx, env->win,x / 2 + env->width / 2 , 14,0x008833, "#");
+	mlx_string_put(env->mlx, env->win,(-x / 2) + env->width / 2 , 14,0x008833, "#");
+	mlx_string_put(env->mlx, env->win, env->width / 2 - 2, 14,0xff, "\x2");
+	mlx_string_put(env->mlx, env->win, env->width / 2 - 1, 14,0xff, "\x2");
+	mlx_string_put(env->mlx, env->win, env->width / 2 + 1, 14,0xff, "\x2");
+	mlx_string_put(env->mlx, env->win, env->width / 2 + 2, 14,0xff, "\x2");
+	mlx_string_put(env->mlx, env->win, env->width / 2 + 3, 14,0xff, "\x2");
+	mlx_string_put(env->mlx, env->win, env->width / 2 + 4, 14,0xff, "\x2");
+	mlx_string_put(env->mlx, env->win, env->width / 2 + 5, 14,0xff, "\x2");
+	mlx_string_put(env->mlx, env->win, env->width / 2 + 6, 14,0xff, "\x2");
+	mlx_string_put(env->mlx, env->win, env->width / 2 + 7, 14,0xff, "\x2");
+	mlx_string_put(env->mlx, env->win, env->width / 2 + 8, 14,0xff, "\x2");
+	mlx_string_put(env->mlx, env->win, env->width / 2 + 9, 14,0xff, "\x2");
+	mlx_string_put(env->mlx, env->win, env->width / 2 + 10, 14,0xff, "\x2");
+	mlx_string_put(env->mlx, env->win, env->width / 2 + 11, 14,0xff, "\x2");
+	mlx_string_put(env->mlx, env->win, env->width / 2 + 12, 14,0xff, "\x2");
+	tmp = ft_itoa((x * 100) / env->width);
+	mlx_string_put(env->mlx, env->win, env->width / 2 , 14,0xffff00, tmp);
+	free(tmp);
+	mlx_string_put(env->mlx, env->win, env->width / 2 + 12, 14,0xffff00, 
 			"%");
 	mlx_do_sync(env->mlx);
 	mlx_destroy_image(env->mlx, img);
@@ -44,6 +59,7 @@ void	printenv(t_fractenv *env)
 	void	*img;
 	unsigned int *imgstr;
 	size_t		i;
+	char *tmp;
 
 	i = 0;
 	img = mlx_new_image(env->mlx, 90 , 80 );
@@ -59,63 +75,79 @@ void	printenv(t_fractenv *env)
 	mlx_put_image_to_window(env->mlx, env->win, img, 3, 22);
 	mlx_destroy_image(env->mlx, img);
 	mlx_string_put(env->mlx, env->win, 10, 55,0x00FF00, "imax :");
-	mlx_string_put(env->mlx, env->win, 50, 55,0x00FF00, ft_itoa(env->fract[env->op].it_max));
+	tmp = ft_itoa(env->fract[env->op].it_max);
+	mlx_string_put(env->mlx, env->win, 50, 55,0x00FF00, tmp );
+	free(tmp);
 	mlx_string_put(env->mlx, env->win, 10, 75,0x00FF00, "frac :");
 	mlx_string_put(env->mlx, env->win, 50, 75,0x00FF00, env->fract[env->op].name);
 	mlx_string_put(env->mlx, env->win, 10, 95,0x00FF00, "col  :");
+	tmp = ft_itoa(env->fract[env->op].colormode);
 	mlx_string_put(env->mlx, env->win, 50, 95,0x00FF * env->fract[env->op].color,
-			ft_itoa(env->fract[env->op].colormode));
+			tmp);
+	free(tmp);
 	mlx_string_put(env->mlx, env->win, 10, 35,0x00FF00, "time :");
 }
 
-unsigned int get_color(t_fract fract, size_t i)
+unsigned int	modcolor(t_fract fract, size_t i)
+{
+	unsigned int color;
+
+	if (i % 3 == 0)
+		color= fract.color;
+	else if (i % 3 == 1)
+	{
+		if (fract.color > 0x1)
+			color = fract.color / 0x100;
+		else
+			color =0x10000;
+		color= 0x010101 - color;
+	}
+	else
+	{
+		if (fract.color < 0x10000)
+			color = fract.color * 0x100;
+		else
+			color =0x1;
+		color= 0x010101 - color;
+	}
+	return (color);
+}
+
+unsigned int	ratiocolor(t_fract fract, size_t i)
+{
+	unsigned int color;
+
+	if (i < fract.it_max / 3)
+		color= fract.color;
+	else if (i < 2 * fract.it_max / 3)
+	{
+		if (fract.color > 0x1)
+			color = fract.color / 0x100;
+		else
+			color =0x10000;
+		color= 0x010101 - color;
+	}
+	else
+	{
+		if (fract.color < 0x10000)
+			color = fract.color * 0x100;
+		else
+			color =0x1;
+		color= 0x010101 - color;
+	}
+	return (color);
+}
+
+unsigned int	get_color(t_fract fract, size_t i)
 {
 	unsigned int color;
 
 	if (fract.colormode <= 1)
 		return (fract.color);
 	else if (fract.colormode <= 3)
-	{
-		if (i % 3 == 0)
-			color= fract.color;
-		else if (i % 3 == 1)
-		{
-			if (fract.color > 0x1)
-				color = fract.color / 0x100;
-			else
-				color =0x10000;
-			color= 0x010101 - color;
-		}
-		else
-		{
-			if (fract.color < 0x10000)
-				color = fract.color * 0x100;
-			else
-				color =0x1;
-			color= 0x010101 - color;
-		}
-	}
+		return (modcolor(fract, i));
 	else
-	{
-		if (i < 3 * fract.it_max / 100)
-			color= fract.color;
-		else if (i < 3 * fract.it_max / 10)
-		{
-			if (fract.color > 0x1)
-				color = fract.color / 0x100;
-			else
-				color =0x10000;
-			color= 0x010101 - color;
-		}
-		else
-		{
-			if (fract.color < 0x10000)
-				color = fract.color * 0x100;
-			else
-				color =0x1;
-			color= 0x010101 - color;
-		}
-	}
+		return(ratiocolor(fract, i));
 	return (color);
 }
 
@@ -142,5 +174,5 @@ void	addpixel(t_fractenv *env, t_pixel pixel, int color)
 		color = 0x0f0f0f & color;
 		color *= 0x10 ;
 	}
-	env->imgstr[(int)pixel.x + (int)pixel.y * env->width] = (unsigned int)color;
+	env->imgstr[(int)pixel.x + (int)pixel.y * (int)env->width] = (unsigned int)color;
 }

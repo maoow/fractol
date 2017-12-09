@@ -34,7 +34,7 @@ void			move(t_fractenv *env)
 	env->move = !env->move;
 
 printf("%s\n",env->fract[env->op].name);
-printf("%LF%LF\n",env->fract[env->op].mouse.x * 300 + env->width / 2, env->fract[env->op].mouse.y * 300 + env->height / 2);
+printf("%F%F\n",env->fract[env->op].mouse.x * 300 + env->width / 2, env->fract[env->op].mouse.y * 300 + env->height / 2);
 }
 
 void			left(t_fractenv *env)
@@ -91,7 +91,7 @@ void			higher(t_fractenv *env)
 {
 
 	if (env->fract[env->op].it_max > 15 && env->fract[env->op].it_max < 4096)
-		env->fract[env->op].it_max += env->fract[env->op].it_max;
+		env->fract[env->op].it_max += env->fract[env->op].it_max / 8;
 	else
 		env->fract[env->op].it_max++;
 	if (env->verbose)
@@ -101,7 +101,7 @@ void			higher(t_fractenv *env)
 void			lower(t_fractenv *env)
 {
 	if (env->fract[env->op].it_max > 16)
-		env->fract[env->op].it_max /= 2;
+		env->fract[env->op].it_max -= env->fract[env->op].it_max / 8;
 	else if (env->fract[env->op].it_max > 1)
 		env->fract[env->op].it_max--;
 	if (env->verbose)

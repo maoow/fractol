@@ -89,8 +89,8 @@ static void	bbrowse(t_fractenv *env)// void (op(t_fractenv *, t_pixel)))
 			bpfract(env, z);
 			z.y++;
 		}
-		//if (env->verbose && (int)z.x % 12 == 0)
-		//put_loading_logo(env, (int)z.x);
+		if (env->verbose && (int)z.x % 12 == 0)
+		put_loading_logo(env, (int)z.x);
 		z.x++;
 	}
 }
@@ -118,6 +118,7 @@ void	bfract(t_fractenv *env)
 {
 	clock_t t;	
 	clock_t t2;	
+char *tmp;
 
 	env->imap = (t_pixel *)malloc(env->fract[env->op].it_max * sizeof(t_pixel));
 	env->img = mlx_new_image(env->mlx, env->width, env->height);
@@ -131,7 +132,9 @@ void	bfract(t_fractenv *env)
 		if (env->verbose)
 		{
 			printenv(env);
-			mlx_string_put(env->mlx, env->win, 50, 35,0x00FF00, ft_itoa(((t2 - t) * 1000) / CLOCKS_PER_SEC)); 
+tmp = ft_itoa(((t2 - t) * 1000) / CLOCKS_PER_SEC);
+			mlx_string_put(env->mlx, env->win, 50, 35,0x00FF00, tmp); 
+free(tmp);
 		}
 	if (env->fract[env->op].img)
 		mlx_destroy_image(env->mlx, env->fract[env->op].img);
@@ -143,6 +146,7 @@ void	fract(t_fractenv *env)
 {
 	clock_t t;	
 	clock_t t2;	
+char *tmp;
 
 	env->img = mlx_new_image(env->mlx, env->width, env->height);
 	env->imgstr = (unsigned int *)mlx_get_data_addr(env->img, &env->bpp, &env->sl, &env->end);
@@ -155,7 +159,9 @@ void	fract(t_fractenv *env)
 		if (env->verbose)
 		{
 			printenv(env);
-			mlx_string_put(env->mlx, env->win, 50, 35,0x00FF00, ft_itoa(((t2 - t) * 1000) / CLOCKS_PER_SEC)); 
+tmp = ft_itoa(((t2 - t) * 1000) / CLOCKS_PER_SEC);
+			mlx_string_put(env->mlx, env->win, 50, 35,0x00FF00, tmp); 
+free(tmp);
 		}
 	if (env->fract[env->op].img)
 		mlx_destroy_image(env->mlx, env->fract[env->op].img);

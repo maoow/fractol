@@ -16,9 +16,9 @@ t_fract resetfract(t_fract fract)
 {
 	fract.img = NULL;
 	fract.lastit = 0;
-	fract.it_max = 4;
+	fract.it_max = 16;
 	fract.color = 0x000100;
-	fract.colormode = 2;
+	fract.colormode = 4;
 	fract.x = -650;
 	fract.y = -450;
 	//fract.zoom = env->width / 8;
@@ -38,79 +38,76 @@ t_fract	initfractale(char *name, t_pixel (*serie)(), void (*ffract)(), t_pixel l
 	return (fract);
 }
 
-void	initfract(t_fractenv *env)
+void	initfract(t_fractenv *env, t_pixel *reglim, t_pixel *bublim)
 {
-	env->move = false;
+	reglim->x = 0;
+	reglim->y = 4.5;
+	bublim->x = 0.145;
+	bublim->y = 4.5;
+	env->mlx = mlx_init();
+	env->width = 1350;
+	env->height = 760;
+	env->move = true;
 	env->mouse.x = 0;
 	env->mouse.y = 0;
 	env->op = 0;
 	env->mod = true;
 	env->verbose = true;
+	env->move = true;
+	env->win = mlx_new_window(env->mlx, env->width, env->height, "fract");
 }
 
 void	init(t_fractenv *env)
 {
-
 	t_pixel	reglim;
 	t_pixel	bublim;
-	reglim.x = 0;
-	reglim.y = 4.5;
-	bublim.x = 0.145;
-	bublim.y = 4.5;
-	env->mlx = mlx_init();
-	env->width = 1350;
-	env->height = 760;
-env->move = true;
-env->op = 0;
+
+	initfract(env, &reglim, &bublim);
 	env->fract[env->op] = initfractale("mand", &ju_op, &fract, reglim, false);
 	env->fract[++env->op] = initfractale("bship", &rju_op, &fract, reglim, false);
 	env->fract[++env->op] = initfractale("dmand", &dju_op, &fract, reglim, false);
 	env->fract[++env->op] = initfractale("tmand", &tju_op, &fract, reglim, false);
 	env->fract[++env->op] = initfractale("ju", &ju_op, &fract, reglim, true);
-mousemove(317, 318, env);
+	mousemove(317, 318, env);
 	env->fract[++env->op] = initfractale("dju", &dju_op, &fract, reglim, true);
-mousemove(452, 317, env);
+	mousemove(452, 317, env);
 	env->fract[++env->op] = initfractale("tju", &tju_op, &fract, reglim, true);
-mousemove(577, 389, env);
+	mousemove(577, 389, env);
 	env->fract[++env->op] = initfractale("absju", &mrju_op, &fract, reglim, true);
-mousemove(589, 328, env);
+	mousemove(589, 328, env);
 	env->fract[++env->op] = initfractale("buble", &ju_op, &fract, bublim, true);
-mousemove(788, 491, env);
+	mousemove(788, 491, env);
 	env->fract[++env->op] = initfractale("dbuble", &dju_op, &fract, bublim, true);
-mousemove(581, 517, env);
+	mousemove(799, 167, env);
 	env->fract[++env->op] = initfractale("tbuble", &tju_op, &fract, bublim, true);
-mousemove(615, 442, env);
+	mousemove(615, 442, env);
 	env->fract[++env->op] = initfractale("absbuble", &mrju_op, &fract, bublim, true);
-mousemove(551, 437, env);
+	mousemove(551, 437, env);
 	env->fract[++env->op] = initfractale("buddha", &ju_op, &bfract, reglim, false);
-mousemove(317, 318, env);
-	initfract(env);
-	env->win = NULL;
-env->op = 0;
-	//while (env->op < NB_FRACT)
-	//{
-		//env->fract[env->op].colormode = env->op % 6;
-		//if (env->op % 3 == 1)
-			//env->fract[env->op].color = 0x100;
-		//else if (env->op % 3 == 2)
-			//env->fract[env->op].color = 0x10000;
-		//env->fract[env->op].function(env);
-		//env->op++;
-	//}
-	env->move = false;
-//	env->fract[12].it_max = 2000;
-	env->op = 12;
-	env->win = mlx_new_window(env->mlx, env->width, env->height, "fract");
 }
 
-int		main(void)
+void		clean(t_fractenv *env)
+{
+(void)env; // TODO !!!
+}
+
+int		main(int ac, char **av)
 {
 	t_fractenv env;
+	int		op;
 
 	init(&env);
+	env.op = 0;
+	if (ac == 2)
+	{
+		op = ft_atoi(av[1]);
+		if (op > 0 && op <= NB_FRACT)
+			env.op = op - 1;
+	}
 	mlx_key_hook(env.win, &keypressed, &env);
 	mlx_hook(env.win, MN, MM, &mousemove, &env);
 	mlx_loop_hook(env.mlx, &mloop, &env);
 	mlx_mouse_hook(env.win, &buttonpressed, &env);
 	mlx_loop(env.mlx);
+	clean(&env);
 }
