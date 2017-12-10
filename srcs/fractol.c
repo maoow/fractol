@@ -25,25 +25,46 @@ static bool	isonlydigit(const char *str)
 	}
 	return (true);
 }
-
-static void	parse(t_fractenv *env, char *str)
+static void	usage(t_fractenv *env)
 {
 	int			op;
 
-	op = ft_atoi(str);
-	if (op > 0 && op <= NB_FRACT && isonlydigit(str))
-		env->op = op - 1;
-	else
+	ft_printf("fractol [fractale_id] [iterations_nb] :\n");
+	ft_printf("fractales :\n");
+	op = 0;
+	while (op < NB_FRACT)
 	{
-		ft_printf("illegal option : %s\n", str);
-		ft_printf("possible params :\n");
-		op = 0;
-		while (op < NB_FRACT)
+		ft_printf("[%d]: %s\n", op + 1, env->fract[op].name);
+		op++;
+	}
+	exit(0);
+}
+
+static void	parse(t_fractenv *env, int ac, char **av)
+{
+	int			n;
+
+	if (ac >= 2)
+	{
+		n = ft_atoi(av[1]);
+		if (n > 0 && n <= NB_FRACT && isonlydigit(av[1]))
+			env->op = n - 1;
+		else
 		{
-			ft_printf("[%d]: %s\n", op + 1, env->fract[op].name);
-			op++;
+			ft_printf("illegal option : %s\n", av[1]);
+			usage(env);
 		}
-		exit(0);
+		if (ac >= 3)
+		{
+			n = ft_atoi(av[2]);
+			if (n > 0 && isonlydigit(av[2]))
+				env->fract[env->op].it_max = n;
+			else
+			{
+				ft_printf("illegal option : %s\n", av[2]);
+				usage(env);
+			}
+		}
 	}
 }
 
@@ -54,8 +75,7 @@ int			main(int ac, char **av)
 	initfract(&env);
 	init(&env);
 	env.op = 0;
-	if (ac == 2)
-		parse(&env, av[1]);
+	parse(&env, ac, av);
 	mlx_key_hook(env.win, &keypressed, &env);
 	mlx_hook(env.win, MN, MM, &mousemove, &env);
 	mlx_loop_hook(env.mlx, &mloop, &env);
