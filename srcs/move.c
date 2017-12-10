@@ -14,6 +14,8 @@
 
 void			reset(t_fractenv *env)
 {
+if (env->fract[env->op].img)
+mlx_destroy_image(env->mlx, env->fract[env->op].img);
 env->fract[env->op] = resetfract(env->fract[env->op]);
 }
 void			colorup(t_fractenv *env)
