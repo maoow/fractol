@@ -1,22 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   series.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cbinet <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/12/10 13:59:19 by cbinet            #+#    #+#             */
+/*   Updated: 2017/12/10 15:10:40 by cbinet           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fractol.h"
-
-void	csquare(t_pixel *z)
-{
-	double	tmp;
-
-	tmp = z->x;
-	z->x = z->x * z->x - z->y * z->y;
-	z->y = z->y * 2 * tmp;
-}
-
-bool	is_bounded(t_fractenv *env, t_pixel a)
-{
-	double tmp;
-	tmp = a.x * a.x + a.y * a.y;
-	return (
-			(tmp < env->fract[env->op].max && tmp > env->fract[env->op].min)
-	       );
-}
 
 t_pixel	tju_op(t_pixel *a, t_pixel b)
 {
@@ -48,6 +42,7 @@ t_pixel	ju_op(t_pixel *a, t_pixel b)
 	a->y += (b.y);
 	return (*a);
 }
+
 t_pixel	mrju_op(t_pixel *a, t_pixel b, double zoom)
 {
 	a->x *= zoom;
@@ -58,6 +53,7 @@ t_pixel	mrju_op(t_pixel *a, t_pixel b, double zoom)
 	a->y += (b.y);
 	return (*a);
 }
+
 t_pixel	rju_op(t_pixel *a, t_pixel b, double zoom)
 {
 	a->x *= zoom;

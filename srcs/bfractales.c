@@ -1,18 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fractales.c                                        :+:      :+:    :+:   */
+/*   bfractales.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/28 14:11:57 by cbinet            #+#    #+#             */
-/*   Updated: 2017/12/10 15:12:23 by cbinet           ###   ########.fr       */
+/*   Created: 2017/12/10 15:11:35 by cbinet            #+#    #+#             */
+/*   Updated: 2017/12/10 16:07:36 by cbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void			pfract(t_fractenv *env, t_pixel pixel)
+void			bdraw(t_fractenv *env, size_t i)
+{
+	unsigned int color;
+
+	if (env->fract[env->op].colormode % 2 == 1)
+		color = get_color(env->fract[env->op], i);
+	while (--i > 0)
+	{
+		if (env->fract[env->op].colormode % 2 == 0)
+			color = get_color(env->fract[env->op], i);
+		if (env->fract[env->op].it_max < 255)
+			color *= ((255) / env->fract[env->op].it_max);
+		increasepixel(env, env->imap[i], color);
+	}
+}
+
+void			bpfract(t_fractenv *env, t_pixel pixel)
 {
 	size_t	i;
 	t_pixel	z;
@@ -24,18 +40,18 @@ void			pfract(t_fractenv *env, t_pixel pixel)
 		p = z;
 	else
 	{
-		p.x = (env->fract[env->op].mouse.x);
-		p.y = (env->fract[env->op].mouse.y);
+		p.x = (env->fract[env->op].mouse.x - env->width / 2) / 1000;
+		p.y = (env->fract[env->op].mouse.y - env->height / 2) / 1000;
 	}
 	i = 0;
 	while (++i != env->fract[env->op].it_max && (is_bounded(env, z) || i == 0))
-		env->fract[env->op].serie(&z, p, env->fract[env->op].zoom);
-	i = (get_color(env->fract[env->op], i)) *
-		(i * 0xfe / env->fract[env->op].it_max);
-	addpixel(env, pixel, i);
+		env->imap[i] =
+			env->fract[env->op].serie(&z, p, env->fract[env->op].zoom);
+	if (i != env->fract[env->op].it_max)
+		bdraw(env, i);
 }
 
-static void		browse(t_fractenv *env)
+static void		bbrowse(t_fractenv *env)
 {
 	t_pixel	z;
 
@@ -45,24 +61,25 @@ static void		browse(t_fractenv *env)
 		z.y = 0;
 		while (z.y != env->height)
 		{
-			pfract(env, z);
+			bpfract(env, z);
 			z.y++;
 		}
 		z.x++;
 	}
 }
 
-void			fract(t_fractenv *env)
+void			bfract(t_fractenv *env)
 {
 	clock_t	t;
 	clock_t	t2;
 	char	*tmp;
 
+	env->imap = (t_pixel *)malloc(env->fract[env->op].it_max * sizeof(t_pixel));
 	env->img = mlx_new_image(env->mlx, env->width, env->height);
 	env->imgstr = (unsigned int *)mlx_get_data_addr(env->img,
 			&env->bpp, &env->sl, &env->end);
 	t = clock();
-	browse(env);
+	bbrowse(env);
 	t2 = clock();
 	if (env->win)
 		mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
@@ -77,4 +94,5 @@ void			fract(t_fractenv *env)
 	if (env->fract[env->op].img)
 		mlx_destroy_image(env->mlx, env->fract[env->op].img);
 	env->fract[env->op].img = env->img;
+	free(env->imap);
 }
