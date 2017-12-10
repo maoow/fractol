@@ -12,8 +12,9 @@
 
 #include "fractol.h"
 
-void		quit(void)
+void		quit(t_fractenv *env)
 {
+	fractclean(env);
 	exit(0);
 }
 

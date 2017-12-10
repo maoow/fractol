@@ -61,5 +61,4 @@ int			main(int ac, char **av)
 	mlx_loop_hook(env.mlx, &mloop, &env);
 	mlx_mouse_hook(env.win, &buttonpressed, &env);
 	mlx_loop(env.mlx);
-	clean(&env);
 }

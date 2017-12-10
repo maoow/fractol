@@ -12,7 +12,16 @@
 
 #include "fractol.h"
 
-void		clean(t_fractenv *env)
+void		fractclean(t_fractenv *env)
 {
-	(void)env; // TODO !!!
+	size_t	op;
+
+	op = 0;
+	while (op < NB_FRACT)
+	{
+		free(env->fract[op].name);
+		if (env->fract[op].img)
+			mlx_destroy_image(env->mlx, env->fract[op].img);
+		op++;
+	}
 }

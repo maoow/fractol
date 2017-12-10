@@ -125,7 +125,7 @@ void				printenv(t_fractenv *env);
 void				put_loading_logo(t_fractenv *env, int x);
 void				initfract(t_fractenv *env);
 void				reset(t_fractenv *env);
-void				clean(t_fractenv *env);
+void				fractclean(t_fractenv *env);
 t_pixel				ju_op(t_pixel *a, t_pixel b);
 t_pixel				tju_op(t_pixel *a, t_pixel b);
 t_pixel				dju_op(t_pixel *a, t_pixel b);
