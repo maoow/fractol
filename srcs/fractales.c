@@ -64,16 +64,14 @@ void			fract(t_fractenv *env)
 	t = clock();
 	browse(env);
 	t2 = clock();
-	if (env->win)
-		mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
-	if (env->win)
-		if (env->verbose)
-		{
-			printenv(env);
-			tmp = ft_itoa(((t2 - t) * 1000) / CLOCKS_PER_SEC);
-			mlx_string_put(env->mlx, env->win, 80, 35, 0x00FF00, tmp);
-			free(tmp);
-		}
+	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
+	if (env->verbose)
+	{
+		printenv(env);
+		tmp = ft_itoa(((t2 - t) * 1000) / CLOCKS_PER_SEC);
+		mlx_string_put(env->mlx, env->win, 80, 35, 0x00FF00, tmp);
+		free(tmp);
+	}
 	if (env->fract[env->op].img)
 		mlx_destroy_image(env->mlx, env->fract[env->op].img);
 	env->fract[env->op].img = env->img;

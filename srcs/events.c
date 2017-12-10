@@ -70,10 +70,10 @@ int			keypressed(int key, t_fractenv *env)
 {
 	size_t			count;
 	void			(*const keyf[K_NB])() =
-	{ &quit, &verbose, &left, &down, &up, &move, &higher,
+	{ &quit, &quit, &verbose, &left, &down, &up, &move, &higher,
 		&lower, &colorup, &zoom, &dezoom, &reset};
 	const int		keyt[K_NB] =
-	{ K_Q, K_V, K_H, K_K, K_J, K_L, K_F, K_D, K_U, K_M, K_COMMA, K_I};
+	{ K_ESC, K_Q, K_V, K_H, K_K, K_J, K_L, K_F, K_D, K_U, K_M, K_COMMA, K_I};
 
 	count = 0;
 	while (count < K_NB && key != keyt[count])

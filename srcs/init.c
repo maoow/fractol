@@ -30,7 +30,8 @@ t_fract		initfractale(char *name, t_pixel (*serie)(),
 {
 	t_fract fract;
 
-	fract.name = ft_strdup(name);
+	if (!(fract.name = ft_strdup(name)))
+		exit(1);
 	fract = resetfract(fract);
 	fract.serie = serie;
 	fract.function = ffract;

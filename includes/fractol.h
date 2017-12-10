@@ -19,7 +19,7 @@
 # include <time.h>
 # include <stdio.h>
 # include <math.h>
-# define K_NB 12
+# define K_NB 13
 # define B_NB 2
 # define MN 6
 # define MM (1L<<6)
