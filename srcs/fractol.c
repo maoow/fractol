@@ -29,7 +29,8 @@ static void	usage(t_fractenv *env)
 {
 	int			op;
 
-	ft_printf("fractol [fractale_id] [iterations_nb] [colormode 0-6] :\n");
+	ft_printf("fractol [-h] [fractale_id] [iterations_nb] [colormode 0-6] :\n");
+	ft_printf("-h : display this help and exit\n\n");
 	ft_printf("fractales :\n");
 	op = 0;
 	while (op < NB_FRACT)
@@ -42,6 +43,7 @@ static void	usage(t_fractenv *env)
 
 static void	wrongoption(t_fractenv *env, char *str)
 {
+if (ft_strcmp("-h", str))
 	ft_printf("illegal option : %s\n", str);
 	usage(env);
 }
