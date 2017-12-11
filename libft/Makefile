@@ -6,11 +6,11 @@
 #    By: cbinet <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/13 14:45:18 by cbinet            #+#    #+#              #
-#    Updated: 2017/10/18 15:18:06 by cbinet           ###   ########.fr        #
+#    Updated: 2017/12/11 09:34:00 by cbinet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FLAG = -Wall -Wextra -Werror -g -I includes
+FLAG = -flto -Ofast -O2 -I includes
 
 NAME = libftprintf.a
 

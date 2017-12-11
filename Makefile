@@ -6,7 +6,7 @@
 #    By: cbinet <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/17 12:55:51 by cbinet            #+#    #+#              #
-#    Updated: 2017/12/10 16:41:20 by cbinet           ###   ########.fr        #
+#    Updated: 2017/12/11 09:33:55 by cbinet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,8 @@ MLX=mlx
 CC = gcc
 LFLAGS = -framework OpenGL -framework AppKit -lmlx #-lXext -lX11
 CFLAGS = -IGL -IGLUT -lXext -lX11 -lm
-DEBUG = -flto -ofast -o2 -Wall -Wextra -Werror
-CPPFLAGS = -iquote includes/$(MLX) -iquote includes -iquote $(LIB_PATH)$(INC)
+DEBUG = -flto -Ofast -O2 -Wall -Wextra -Werror
+CPPFLAGS = -iquote $(MLX) -iquote includes -iquote $(LIB_PATH)$(INC)
 
 SRC_PATH = srcs/
 SRC_NAME = fractol.c events.c move.c fractales.c draw.c series.c complex.c \
@@ -30,18 +30,18 @@ OBJ_NAME = $(SRC_NAME:.c=.o)
 	OBJS = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
 	INC = includes/
 	LIB_PATH := libft/
-	LIB := $(LIB_PATH)libftprintf.a  $(INC)$(MLX)/libmlx.a
+	LIB := $(LIB_PATH)libftprintf.a  $(MLX)/libmlx.a
 	LIB_INCLUDE := $(LIB_PATH)$(INC)libft.h			\
 		$(LIB_PATH)$(INC)get_next_line.h\
 		$(LIB_PATH)$(INC)ft_printf.h \
-		$(INC)$(MLX)/mlx.h
+		$(MLX)/mlx.h
 	HEADER := $(LIB_INCLUDE)						\
 		includes/fractol.h
 
 all: lib $(NAME)
 
 run: all
-	./$(NAME)
+	./$(NAME) 1
 
 $(NAME): $(OBJS)
 	$(CC) $(DEBUG) $(OBJS) $(CPPFLAGS) $(LIB) $(LFLAGS)  -o $(NAME)
@@ -50,7 +50,7 @@ $(NAME): $(OBJS)
 .PHONY:lib
 lib:
 	@make -C libft
-	@make -C includes/$(MLX)
+	@make -C $(MLX)
 
 $(OBJS): | $(OBJ_PATH)
 
@@ -63,7 +63,7 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c $(HEADER) $(LIB)
 .PHONY:clean
 clean:
 	@make clean -C libft
-	@make clean -C includes/$(MLX)
+	@make clean -C $(MLX)
 	@rm -rf $(OBJ_PATH)
 	@echo "\033[31mObjects files removed.\033[0m"
 
