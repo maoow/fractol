@@ -6,7 +6,7 @@
 /*   By: cbinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 14:43:11 by cbinet            #+#    #+#             */
-/*   Updated: 2017/12/11 09:28:23 by cbinet           ###   ########.fr       */
+/*   Updated: 2017/12/11 09:48:56 by cbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	usage(t_fractenv *env)
 static void	wrongoption(t_fractenv *env, char *str)
 {
 	if (!str)
-		ft_printf("argument needed : %s\n", str);
+		ft_printf("argument needed.\n");
 	else if (ft_strcmp("-h", str))
 		ft_printf("invalid argument : %s\n", str);
 	usage(env);
