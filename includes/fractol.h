@@ -6,7 +6,7 @@
 /*   By: cbinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 15:30:04 by cbinet            #+#    #+#             */
-/*   Updated: 2017/12/10 16:20:26 by cbinet           ###   ########.fr       */
+/*   Updated: 2017/12/11 09:09:05 by cbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ typedef struct		s_fractenv
 	t_pixel			*imap;
 }					t_fractenv;
 
-void		init(t_fractenv *env);
-void		initfract(t_fractenv *env);
-t_fract		initfractale(char *name, t_pixel (*serie)(),
+void				init(t_fractenv *env);
+void				initfract(t_fractenv *env);
+t_fract				initfractale(char *name, t_pixel (*serie)(),
 		void (*ffract)(), bool mdep);
 int					keypressed(int key, t_fractenv *env);
 int					buttonpressed(int key, int x, int y, t_fractenv *env);

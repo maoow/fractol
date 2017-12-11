@@ -6,7 +6,7 @@
 /*   By: cbinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 15:11:35 by cbinet            #+#    #+#             */
-/*   Updated: 2017/12/10 16:07:36 by cbinet           ###   ########.fr       */
+/*   Updated: 2017/12/11 09:07:26 by cbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,22 +71,23 @@ static void		bbrowse(t_fractenv *env)
 void			bfract(t_fractenv *env)
 {
 	clock_t	t;
-	clock_t	t2;
 	char	*tmp;
 
-	if (!(env->imap = (t_pixel *)malloc(env->fract[env->op].it_max * sizeof(t_pixel))))
+	if (!(env->imap = (t_pixel *)malloc(env->fract[env->op].it_max *
+					sizeof(t_pixel))))
 		exit(1);
-	env->img = mlx_new_image(env->mlx, env->width, env->height);
+	if (!(env->img = mlx_new_image(env->mlx, env->width, env->height)))
+		exit(1);
 	env->imgstr = (unsigned int *)mlx_get_data_addr(env->img,
 			&env->bpp, &env->sl, &env->end);
 	t = clock();
 	bbrowse(env);
-	t2 = clock();
+	t = clock() - t;
 	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 	if (env->verbose)
 	{
 		printenv(env);
-		tmp = ft_itoa(((t2 - t) * 1000) / CLOCKS_PER_SEC);
+		tmp = ft_itoa((t * 1000) / CLOCKS_PER_SEC);
 		mlx_string_put(env->mlx, env->win, 80, 35, 0x00FF00, tmp);
 		free(tmp);
 	}

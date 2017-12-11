@@ -6,7 +6,7 @@
 /*   By: cbinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 14:43:11 by cbinet            #+#    #+#             */
-/*   Updated: 2017/12/10 16:31:34 by cbinet           ###   ########.fr       */
+/*   Updated: 2017/12/11 09:08:22 by cbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,13 @@ static bool	isonlydigit(const char *str)
 	}
 	return (true);
 }
+
 static void	usage(t_fractenv *env)
 {
 	int			op;
 
-	ft_printf("fractol [-h] [fractale_id] [iterations_nb] [colormode 0-6] :\n");
+	ft_printf("fractol [-h] fractale_id [iterations_nb] [colormode 0-6] :\n");
+	ft_printf("                         [default 16   ] [default 4    ] :\n");
 	ft_printf("-h : display this help and exit\n\n");
 	ft_printf("fractales :\n");
 	op = 0;
@@ -38,13 +40,16 @@ static void	usage(t_fractenv *env)
 		ft_printf("[%d]: %s\n", op + 1, env->fract[op].name);
 		op++;
 	}
+	fractclean(env);
 	exit(0);
 }
 
 static void	wrongoption(t_fractenv *env, char *str)
 {
-if (ft_strcmp("-h", str))
-	ft_printf("illegal option : %s\n", str);
+	if (!str)
+		ft_printf("argument needed : %s\n", str);
+	else if (ft_strcmp("-h", str))
+		ft_printf("invalid argument : %s\n", str);
 	usage(env);
 }
 
@@ -73,6 +78,8 @@ static void	parse(t_fractenv *env, int ac, char **av)
 			}
 		}
 	}
+	else
+		wrongoption(env, NULL);
 }
 
 int			main(int ac, char **av)
@@ -83,6 +90,10 @@ int			main(int ac, char **av)
 	init(&env);
 	env.op = 0;
 	parse(&env, ac, av);
+	if (!(env.mlx = mlx_init()))
+		exit(1);
+	if (!(env.win = mlx_new_window(env.mlx, env.width, env.height, "fractol")))
+		exit(1);
 	mlx_key_hook(env.win, &keypressed, &env);
 	mlx_hook(env.win, MN, MM, &mousemove, &env);
 	mlx_loop_hook(env.mlx, &mloop, &env);

@@ -6,7 +6,7 @@
 /*   By: cbinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 16:18:58 by cbinet            #+#    #+#             */
-/*   Updated: 2017/12/10 16:19:24 by cbinet           ###   ########.fr       */
+/*   Updated: 2017/12/11 08:59:40 by cbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ t_fract		initfractale(char *name, t_pixel (*serie)(),
 
 void		initfract(t_fractenv *env)
 {
-	env->mlx = mlx_init();
 	env->width = WIDTH;
 	env->height = HEIGHT;
 	env->move = true;
@@ -53,7 +52,6 @@ void		initfract(t_fractenv *env)
 	env->mod = true;
 	env->verbose = true;
 	env->move = true;
-	env->win = mlx_new_window(env->mlx, env->width, env->height, "fract");
 }
 
 void		init(t_fractenv *env)

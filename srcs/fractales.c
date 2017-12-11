@@ -6,7 +6,7 @@
 /*   By: cbinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 14:11:57 by cbinet            #+#    #+#             */
-/*   Updated: 2017/12/10 15:12:23 by cbinet           ###   ########.fr       */
+/*   Updated: 2017/12/11 09:07:35 by cbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void			fract(t_fractenv *env)
 	clock_t	t2;
 	char	*tmp;
 
-	env->img = mlx_new_image(env->mlx, env->width, env->height);
+	if (!(env->img = mlx_new_image(env->mlx, env->width, env->height)))
+		exit(1);
 	env->imgstr = (unsigned int *)mlx_get_data_addr(env->img,
 			&env->bpp, &env->sl, &env->end);
 	t = clock();
