@@ -27,6 +27,8 @@ fractol [-h] fractale_id [iterations_nb] [colormode 0-6] :
   zoom
 #### COMMA, mouse wheel down
   dezoom
+#### L
+  lock/unlock mouse dependancy for julias fractales
 
 # fractales :
 
