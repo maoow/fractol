@@ -32,6 +32,7 @@ fractol [-h] fractale_id [iterations_nb] [colormode 0-6] :
 
 # fractales :
 
+
 [1]: mand
 <p align="left">
   <img src="images/1.png" width="700"/>
