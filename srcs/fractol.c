@@ -6,7 +6,7 @@
 /*   By: cbinet <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 14:43:11 by cbinet            #+#    #+#             */
-/*   Updated: 2017/12/11 09:48:56 by cbinet           ###   ########.fr       */
+/*   Updated: 2017/12/13 13:26:07 by cbinet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	parse(t_fractenv *env, int ac, char **av)
 	if (ac >= 2)
 	{
 		n = ft_atoi(av[1]);
-		if (n == 0 || n > NB_FRACT || !isonlydigit(av[1]))
+		if (n <= 0 || n > NB_FRACT || !isonlydigit(av[1]))
 			wrongoption(env, av[1]);
 		env->op = n - 1;
 		if (ac >= 3)
@@ -72,7 +72,7 @@ static void	parse(t_fractenv *env, int ac, char **av)
 			if (ac >= 4)
 			{
 				n = ft_atoi(av[3]);
-				if (n == 0 || n > 5 || !isonlydigit(av[3]))
+				if (n < 0 || n > 5 || !isonlydigit(av[3]))
 					wrongoption(env, av[3]);
 				env->fract[env->op].colormode = n;
 			}
