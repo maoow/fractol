@@ -1,11 +1,35 @@
 # fractol
 fractale explorer as 42 project
 
+# usage :
+
 fractol [-h] fractale_id [iterations_nb] [colormode 0-6] :
                          [default 16   ] [default 4    ] :
 -h : display this help and exit
 
-fractales :
+# explorer keymaps :
+
+#### Q,ESC
+  quit program
+#### J,K
+  change fractale
+#### D,F
+  decrease, increase iteration number
+#### H
+  change color mode
+#### U
+  change color channel
+#### V
+  display/hide verbose panel
+#### I
+  reset zoom, it_max, color mode and color channel to default
+#### M, mouse wheel up
+  zoom
+#### COMMA, mouse wheel down
+  dezoom
+
+# fractales :
+
 [1]: mand
 <p align="left">
   <img src="images/1.png" width="700"/>
