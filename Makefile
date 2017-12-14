@@ -6,17 +6,21 @@
 #    By: cbinet <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/17 12:55:51 by cbinet            #+#    #+#              #
-#    Updated: 2017/12/11 09:33:55 by cbinet           ###   ########.fr        #
+#    Updated: 2017/12/14 13:15:53 by cbinet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fractol
 
+#ifdef __unix__
 MLX=minilibx
-MLX=mlx
-CC = gcc
-LFLAGS = -framework OpenGL -framework AppKit -lmlx #-lXext -lX11
 CFLAGS = -IGL -IGLUT -lXext -lX11 -lm
+#else
+MLX=mlx
+CFLAGS = -framework OpenGL -framework AppKit -lmlx #-lXext -lX11
+#endif
+
+CC = gcc
 DEBUG = -flto -Ofast -O2 -Wall -Wextra -Werror
 CPPFLAGS = -iquote $(MLX) -iquote includes -iquote $(LIB_PATH)$(INC)
 
@@ -44,7 +48,7 @@ run: all
 	./$(NAME) 1
 
 $(NAME): $(OBJS)
-	$(CC) $(DEBUG) $(OBJS) $(CPPFLAGS) $(LIB) $(LFLAGS)  -o $(NAME)
+	$(CC) $(DEBUG) $(OBJS) $(CPPFLAGS) $(LIB) $(CFLAGS)  -o $(NAME)
 	@echo "\033[32m$(NAME) udpated\033[0m"
 
 .PHONY:lib
