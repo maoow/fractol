@@ -1,5 +1,5 @@
 # fractol
-fractale explorer as 42 project
+fractal explorer as 42 project
 
 # usage :
 
