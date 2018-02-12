@@ -4,6 +4,7 @@ fractal explorer
 # usage :
 
 fractol [-h] fractale_id [iterations_nb] [colormode 0-6] :
+
                          [default 16   ] [default 4    ] :
 -h : display this help and exit
 
